@@ -1,0 +1,30 @@
+{
+  "_说明": "复制本文件为 config.json，把 active 设成要用的通道，再给那一家填上真实的 api_key。config.json 已被 .gitignore 忽略，不会上传。",
+  "_用法": "key 用真实串替换；base_url 填实际官方地址或你的代理服务地址；下面的 model 是实际验证可用的版本，换网关或官方时按其支持的模型名改。",
+  "_gemini说明": "gemini 走 OpenAI 兼容 chat/completions 接口（你的代理服务或 OpenRouter 这类聚合网关），不是 Google 官方原生 API；要直连 Google 官方需改 scripts/generate.py 里的 generate_gemini。",
+
+  "active": "openai",
+
+  "providers": {
+    "openai": {
+      "api_key": "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "base_url": "https://你的代理服务",
+      "model": "gpt-image-2"
+    },
+    "gemini": {
+      "api_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "base_url": "https://你的代理服务/v1/chat/completions",
+      "model": "gemini-3.1-flash-image-preview"
+    },
+    "doubao": {
+      "api_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3/images/generations",
+      "model": "doubao-seedream-5-0-260128"
+    },
+    "qwen": {
+      "api_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "base_url": "https://你的代理服务/api/v1/services/aigc/multimodal-generation/generation",
+      "model": "qwen-image-2.0"
+    }
+  }
+}

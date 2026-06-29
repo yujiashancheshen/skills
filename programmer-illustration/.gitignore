@@ -1,0 +1,14 @@
+# 本地密钥配置，绝不上传
+config.json
+
+# 本地 Claude 配置 / Python 缓存，不上传
+.claude/
+__pycache__/
+
+# 系统/编辑器杂物
+.DS_Store
+
+# 出图产物落在调用时的工作目录，不在本技能内；这里只忽略可能残留的图
+*.png
+!templates/*.png
+!workflow.png
