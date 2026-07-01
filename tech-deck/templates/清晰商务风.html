@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>清晰商务风 · 样例</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+    --bg:#FFFFFF;--bg-soft:#F6F9FC;--bg-dark:#0A2540;
+    --fg:#0A2540;--fg-dim:#425466;--fg-faint:#8898AA;--line:rgba(10,37,64,0.1);
+    --blurple:#635BFF;--cyan:#00D4FF;--green:#00D924;
+    --grad:linear-gradient(108deg,#635BFF,#00D4FF 60%,#00D924);
+    --font:'Manrope','Noto Sans SC',sans-serif;
+    --hero:clamp(2.8rem,7vw,5.5rem);--h2:clamp(1.6rem,3.8vw,3rem);--h3:clamp(1.05rem,1.8vw,1.45rem);
+    --body:clamp(0.95rem,1.35vw,1.2rem);--small:clamp(0.8rem,1vw,0.95rem);--label:clamp(0.62rem,0.85vw,0.75rem);
+    --pad:clamp(2.5rem,6vw,7rem);--gap:clamp(1.2rem,2.5vw,2.2rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden}html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;letter-spacing:-0.02em}
+.slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;flex-direction:column;position:relative;background:var(--bg)}
+.slide.dark{background:var(--bg-dark);color:#fff}
+.slant{position:absolute;top:0;right:0;width:45%;height:100%;background:var(--grad);clip-path:polygon(35% 0,100% 0,100% 100%,0 100%);opacity:0.9;pointer-events:none}
+.slant-sm{position:absolute;top:0;left:0;width:100%;height:8px;background:var(--grad);pointer-events:none}
+.content{flex:1;display:flex;flex-direction:column;justify-content:center;max-height:100%;overflow:hidden;padding:var(--pad);gap:var(--gap);position:relative;z-index:1}
+.eyebrow{font-size:var(--label);font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--blurple)}
+.dark .eyebrow{color:var(--cyan)}
+h1{font-size:var(--hero);font-weight:800;line-height:1.05;letter-spacing:-0.03em}
+h2{font-size:var(--h2);font-weight:800;line-height:1.1;letter-spacing:-0.025em}
+h3{font-size:var(--h3);font-weight:700;line-height:1.2}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+p{font-size:var(--body);line-height:1.6;color:var(--fg-dim)}.dark p{color:rgba(255,255,255,0.7)}
+.lead{font-size:var(--h3);color:var(--fg-dim);line-height:1.5;font-weight:400}
+.hl{color:var(--fg);font-weight:700}.dark .hl{color:#fff}.hl-b{color:var(--blurple);font-weight:700}
+.hero .content{justify-content:center;max-width:60%}.hero h1{max-width:14ch}.hero .lead{max-width:38ch;margin-top:0.5rem}
+.hero-tags{display:flex;gap:0.6rem;margin-top:1.5rem;flex-wrap:wrap}
+.tag{background:var(--bg-soft);color:var(--blurple);padding:0.4rem 1rem;border-radius:100px;font-size:var(--small);font-weight:600}
+.stat-hero .content{justify-content:center;align-items:flex-start}
+.stat-hero .big-num{font-size:clamp(5rem,16vw,14rem);font-weight:800;line-height:0.9;letter-spacing:-0.04em}
+.stat-hero .stat-caption{font-size:var(--h3);color:rgba(255,255,255,0.75);max-width:30ch}
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2vw,1.6rem);flex:1;max-height:60vh;align-content:center}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:clamp(1.3rem,2.2vw,2rem);display:flex;flex-direction:column;gap:0.7rem;box-shadow:0 15px 35px rgba(10,37,64,0.07);transition:transform 0.3s ease,box-shadow 0.3s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 22px 45px rgba(10,37,64,0.12)}
+.card-icon{width:clamp(36px,3.5vw,46px);height:clamp(36px,3.5vw,46px);border-radius:11px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:var(--body)}
+.card h3{color:var(--fg)}.card p{font-size:clamp(0.88rem,1.2vw,1.02rem);line-height:1.5}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);flex:1;max-height:62vh;align-items:center}
+.split-l{display:flex;flex-direction:column;gap:1rem}.split-r{display:flex;flex-direction:column;gap:0.8rem}
+.list-row{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;padding:1rem 0;border-bottom:1px solid var(--line);align-items:start}
+.list-row:last-child{border-bottom:none}
+.list-idx{width:34px;height:34px;border-radius:9px;background:var(--bg-soft);color:var(--blurple);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:var(--body)}
+.list-row h3{color:var(--fg);margin-bottom:0.2rem}.list-row p{font-size:var(--small);line-height:1.5}
+.bars{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.6rem);flex:1;max-height:60vh;justify-content:center}
+.bar-item{display:flex;flex-direction:column;gap:0.5rem}
+.bar-head{display:flex;justify-content:space-between;align-items:baseline}
+.bar-head .bl{font-weight:700;font-size:var(--body);color:var(--fg)}
+.bar-head .bv{font-weight:800;font-size:var(--h3);color:var(--blurple)}
+.bar-track{height:10px;background:var(--bg-soft);border-radius:100px;overflow:hidden}
+.bar-fill{height:100%;background:var(--grad);border-radius:100px;width:0;transition:width 1s cubic-bezier(0.22,1,0.36,1)}
+.statement .content{justify-content:center;align-items:center;text-align:center}
+.statement .big{font-size:clamp(2rem,5vw,4rem);font-weight:800;line-height:1.25;max-width:20ch}
+.statement .attr{margin-top:2rem;font-size:var(--small);color:rgba(255,255,255,0.6);letter-spacing:0.1em}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--grad);z-index:1000;transition:width 0.5s cubic-bezier(0.22,1,0.36,1)}
+.idx{position:fixed;bottom:clamp(1rem,2.5vw,2rem);right:clamp(1.5rem,3.5vw,3rem);font-size:var(--small);font-weight:600;color:var(--fg-faint);z-index:100}
+.idx .cur{color:var(--blurple)}
+.dots{position:fixed;right:clamp(1rem,2vw,1.8rem);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0.6rem;z-index:100}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:var(--fg-faint);opacity:0.4;border:none;cursor:pointer;padding:0;transition:all 0.3s ease}
+.nav-dot.active{opacity:1;background:var(--blurple);transform:scale(1.5)}
+.rv{opacity:0;transform:translateY(20px);transition:opacity 0.6s cubic-bezier(0.22,1,0.36,1),transform 0.6s cubic-bezier(0.22,1,0.36,1)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}.d4{transition-delay:0.32s}.d5{transition-delay:0.4s}
+@media (max-height:740px){:root{--pad:clamp(1.8rem,4vw,3.5rem);--gap:clamp(0.9rem,2vw,1.5rem)}}
+@media (max-height:600px){:root{--hero:clamp(2rem,5vw,3rem);--h2:clamp(1.3rem,3vw,1.9rem)}.dots{display:none}}
+@media (max-width:820px){.split,.card-grid{grid-template-columns:1fr}.hero .content{max-width:100%}.slant{display:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.2s!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="idx" id="idx"><span class="cur">01</span> / 07</div>
+<nav class="dots" id="dots"></nav>
+<main>
+
+<section class="slide hero" aria-label="封面">
+    <div class="slant"></div>
+    <div class="content">
+        <span class="eyebrow rv">清晰商务风 · DECK TEMPLATE</span>
+        <h1 class="rv d1">把复杂讲<span class="grad-text">清楚</span></h1>
+        <p class="lead rv d2">专业的演示不靠炫技,靠结构。<br>清晰的层次,本身就是一种说服力。</p>
+        <div class="hero-tags rv d3"><span class="tag">金融级信任感</span><span class="tag">明亮专业</span><span class="tag">数据可视化</span></div>
+    </div>
+</section>
+
+<section class="slide dark stat-hero" aria-label="核心比例">
+    <div class="content">
+        <span class="eyebrow rv">核心比例</span>
+        <div class="big-num grad-text rv d1">3<span style="font-size:0.4em;color:#fff">秒</span></div>
+        <p class="stat-caption rv d2"><span class="hl">3 秒法则。</span>观众看一页演示,前 3 秒决定是否继续。让最重要的信息第一眼就被看到。</p>
+    </div>
+</section>
+
+<section class="slide" aria-label="三大支柱">
+    <div class="slant-sm"></div>
+    <div class="content">
+        <span class="eyebrow rv">壹 · 三大支柱</span>
+        <h2 class="rv d1">清晰来自<span class="hl-b">结构</span></h2>
+        <div class="card-grid">
+            <div class="card rv d2"><div class="card-icon">A</div><h3>分组</h3><p>相关的放一起,不相关的分开。信息有了归属,理解就轻松。</p></div>
+            <div class="card rv d3"><div class="card-icon">B</div><h3>排序</h3><p>从重要到次要,从整体到局部。顺序就是逻辑。</p></div>
+            <div class="card rv d4"><div class="card-icon">C</div><h3>对齐</h3><p>统一的网格和间距,让画面专业可信,不显凌乱。</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" aria-label="信息密度">
+    <div class="slant-sm"></div>
+    <div class="content">
+        <span class="eyebrow rv">贰 · 信息密度</span>
+        <div class="split">
+            <div class="split-l rv d1">
+                <h2>少放一点,<span class="hl-b">多懂一点</span></h2>
+                <p class="lead">每加一个元素,都在稀释观众的注意力。删到不能再删,是最难也最值得的功夫。</p>
+            </div>
+            <div class="split-r">
+                <div class="list-row rv d2"><div class="list-idx">1</div><div><h3>一页一主张</h3><p>每页只有一个核心论点,其余都是支撑。</p></div></div>
+                <div class="list-row rv d3"><div class="list-idx">2</div><div><h3>要点不超五条</h3><p>超过五条人就记不住,该拆页了。</p></div></div>
+                <div class="list-row rv d4"><div class="list-idx">3</div><div><h3>能用图就别用字</h3><p>一张好图胜过一段文字描述。</p></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" aria-label="数据呈现">
+    <div class="slant-sm"></div>
+    <div class="content">
+        <span class="eyebrow rv">叁 · 数据呈现</span>
+        <h2 class="rv d1">让数字<span class="hl-b">会说话</span></h2>
+        <div class="bars">
+            <div class="bar-item rv d2"><div class="bar-head"><span class="bl">突出关键数字</span><span class="bv">90%</span></div><div class="bar-track"><div class="bar-fill" data-w="90%"></div></div></div>
+            <div class="bar-item rv d3"><div class="bar-head"><span class="bl">配一句话解读</span><span class="bv">75%</span></div><div class="bar-track"><div class="bar-fill" data-w="75%"></div></div></div>
+            <div class="bar-item rv d4"><div class="bar-head"><span class="bl">控制图表数量</span><span class="bv">60%</span></div><div class="bar-track"><div class="bar-fill" data-w="60%"></div></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide dark statement" aria-label="金句">
+    <div class="content">
+        <div class="big rv">清晰,是对<span class="grad-text">观众</span>最大的<span class="grad-text">尊重</span>。</div>
+        <div class="attr rv d2">— 演示设计法则</div>
+    </div>
+</section>
+
+<section class="slide" aria-label="收尾">
+    <div class="slant-sm"></div>
+    <div class="content">
+        <span class="eyebrow rv">肆 · 检查清单</span>
+        <h2 class="rv d1">交稿前<span class="hl-b">问自己</span></h2>
+        <div class="card-grid">
+            <div class="card rv d2"><div class="card-icon">✓</div><h3>结构清晰吗</h3><p>论点和支撑能一眼分辨吗?</p></div>
+            <div class="card rv d3"><div class="card-icon">✓</div><h3>重点突出吗</h3><p>最重要的信息第一眼能看到吗?</p></div>
+            <div class="card rv d4"><div class="card-icon">✓</div><h3>能再删吗</h3><p>有没有可有可无的元素?</p></div>
+        </div>
+    </div>
+</section>
+
+</main>
+<script>
+class Deck{
+    constructor(){this.slides=[...document.querySelectorAll('.slide')];this.i=0;this.n=this.slides.length;this.progress=document.getElementById('progress');this.idx=document.getElementById('idx');this.dotsWrap=document.getElementById('dots');this.init()}
+    init(){
+        this.slides.forEach((_,k)=>{const b=document.createElement('button');b.className='nav-dot'+(k===0?' active':'');b.onclick=()=>this.go(k);this.dotsWrap.appendChild(b)});
+        this.dots=[...this.dotsWrap.children];
+        const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){this.i=this.slides.indexOf(e.target);this.ui();e.target.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));e.target.querySelectorAll('.bar-fill').forEach(b=>b.style.width=b.dataset.w)}})},{threshold:0.55});
+        this.slides.forEach(s=>io.observe(s));
+        this.slides[0].querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+        addEventListener('keydown',e=>{if(['ArrowDown','ArrowRight',' '].includes(e.key)){e.preventDefault();this.next()}else if(['ArrowUp','ArrowLeft'].includes(e.key)){e.preventDefault();this.prev()}});
+        let sy=0;addEventListener('touchstart',e=>sy=e.touches[0].clientY,{passive:true});addEventListener('touchend',e=>{const d=sy-e.changedTouches[0].clientY;if(Math.abs(d)>60)d>0?this.next():this.prev()},{passive:true});
+        let lw=0;addEventListener('wheel',e=>{const t=Date.now();if(t-lw<900)return;lw=t;e.deltaY>0?this.next():this.prev()},{passive:true});
+    }
+    next(){if(this.i<this.n-1)this.go(this.i+1)}prev(){if(this.i>0)this.go(this.i-1)}
+    go(k){this.i=k;this.slides[k].scrollIntoView({behavior:'smooth'});this.ui()}
+    ui(){this.progress.style.width=((this.i+1)/this.n*100)+'%';this.idx.innerHTML=`<span class="cur">${String(this.i+1).padStart(2,'0')}</span> / ${String(this.n).padStart(2,'0')}`;this.dots&&this.dots.forEach((d,k)=>d.classList.toggle('active',k===this.i))}
+}
+addEventListener('DOMContentLoaded',()=>new Deck());
+</script>
+</body>
+</html>

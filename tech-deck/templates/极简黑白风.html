@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>极简黑白风 · 样例</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+    --bg:#000;--fg:#fff;--fg-dim:rgba(255,255,255,0.55);--fg-faint:rgba(255,255,255,0.3);
+    --line:rgba(255,255,255,0.15);--signal:#FF3B30;
+    --font:'Archivo','Noto Sans SC',sans-serif;
+    --mega:clamp(3.5rem,13vw,11rem);--hero:clamp(2.8rem,8vw,7rem);--h2:clamp(1.8rem,4.5vw,3.5rem);
+    --h3:clamp(1.1rem,2vw,1.6rem);--body:clamp(1rem,1.5vw,1.3rem);--small:clamp(0.82rem,1vw,0.95rem);--label:clamp(0.62rem,0.85vw,0.75rem);
+    --pad:clamp(2.5rem,6vw,7rem);--gap:clamp(1.2rem,2.5vw,2.2rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden}html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;letter-spacing:-0.02em}
+.slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;flex-direction:column;position:relative;background:var(--bg)}
+.slide.invert{background:var(--fg);color:var(--bg)}
+.content{flex:1;display:flex;flex-direction:column;justify-content:center;max-height:100%;overflow:hidden;padding:var(--pad);gap:var(--gap);position:relative;z-index:1}
+.eyebrow{font-size:var(--label);font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:var(--signal)}
+h1{font-size:var(--hero);font-weight:900;line-height:0.98;letter-spacing:-0.04em}
+h2{font-size:var(--h2);font-weight:900;line-height:1.05;letter-spacing:-0.03em}
+h3{font-size:var(--h3);font-weight:800;line-height:1.15}
+.sig{color:var(--signal)}
+p{font-size:var(--body);line-height:1.55;color:var(--fg-dim)}.invert p{color:rgba(0,0,0,0.6)}
+.lead{font-size:var(--h3);color:var(--fg-dim);line-height:1.4;font-weight:400}.invert .lead{color:rgba(0,0,0,0.6)}
+.hero .content{justify-content:center}.hero h1{max-width:13ch}.hero .lead{max-width:36ch;margin-top:1rem}
+.hero-meta{margin-top:2rem;font-size:var(--small);color:var(--fg-faint);letter-spacing:0.15em;text-transform:uppercase}
+.mega .content{justify-content:center;align-items:flex-start}
+.mega-num{font-size:var(--mega);font-weight:900;line-height:0.82;letter-spacing:-0.05em}
+.mega-cap{font-size:var(--h2);font-weight:900;max-width:18ch;margin-top:0.5rem;line-height:1.1}
+.mega-sub{font-size:var(--body);color:var(--fg-dim);max-width:32ch;margin-top:1rem}
+.invert .mega-sub{color:rgba(0,0,0,0.55)}
+.statement .content{justify-content:center;align-items:flex-start}
+.statement .big{font-size:clamp(2.4rem,6.5vw,5.5rem);font-weight:900;line-height:1.05;letter-spacing:-0.035em;max-width:16ch}
+.statement .attr{margin-top:2.5rem;font-size:var(--small);letter-spacing:0.2em;text-transform:uppercase;color:var(--fg-faint)}
+.invert .statement .attr{color:rgba(0,0,0,0.4)}
+.big-list{display:flex;flex-direction:column;gap:0;flex:1;max-height:64vh;justify-content:center}
+.bl-row{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.2rem,2.5vw,2.5rem);padding:clamp(0.9rem,1.8vw,1.5rem) 0;border-bottom:1px solid var(--line);align-items:center}
+.bl-row:last-child{border-bottom:none}
+.bl-num{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:900;color:var(--signal);line-height:1;font-variant-numeric:tabular-nums}
+.bl-row h3{line-height:1.1}.bl-row p{font-size:var(--small);margin-top:0.3rem}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--signal);z-index:1000;transition:width 0.4s cubic-bezier(0.22,1,0.36,1)}
+.idx{position:fixed;bottom:clamp(1rem,2.5vw,2rem);right:clamp(1.5rem,3.5vw,3rem);font-size:var(--small);font-weight:800;color:var(--fg-faint);z-index:100;font-variant-numeric:tabular-nums}
+.idx .cur{color:var(--signal)}
+.dots{position:fixed;right:clamp(1rem,2vw,1.8rem);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0.7rem;z-index:100}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--fg-faint);opacity:0.5;border:none;cursor:pointer;padding:0;transition:all 0.3s ease}
+.nav-dot.active{opacity:1;background:var(--signal);transform:scale(1.4)}
+.rv{opacity:0;transform:translateY(18px);transition:opacity 0.5s cubic-bezier(0.22,1,0.36,1),transform 0.5s cubic-bezier(0.22,1,0.36,1)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.07s}.d2{transition-delay:0.14s}.d3{transition-delay:0.21s}.d4{transition-delay:0.28s}.d5{transition-delay:0.35s}
+@media (max-height:740px){:root{--pad:clamp(1.8rem,4vw,3.5rem);--gap:clamp(0.9rem,2vw,1.5rem)}}
+@media (max-height:600px){:root{--mega:clamp(3rem,10vw,6rem);--hero:clamp(2rem,6vw,3.5rem);--h2:clamp(1.4rem,3.5vw,2.2rem)}.dots{display:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.2s!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="idx" id="idx"><span class="cur">01</span> / 07</div>
+<nav class="dots" id="dots"></nav>
+<main>
+
+<section class="slide hero" aria-label="封面">
+    <div class="content">
+        <span class="eyebrow rv">极简黑白风 · DECK TEMPLATE</span>
+        <h1 class="rv d1">少,<br>但是<span class="sig">更好</span>。</h1>
+        <p class="lead rv d2">最强的演示往往最简单。一页一句话,一句话一焦点。</p>
+        <div class="hero-meta rv d3">Less / But / Better</div>
+    </div>
+</section>
+
+<section class="slide invert mega" aria-label="核心">
+    <div class="content">
+        <span class="eyebrow rv">核心主张</span>
+        <div class="mega-num rv d1">0</div>
+        <div class="mega-cap rv d2">多余的元素</div>
+        <p class="mega-sub rv d3">删到不能再删。每一个留下的东西,都必须有存在的理由。</p>
+    </div>
+</section>
+
+<section class="slide statement" aria-label="陈述1">
+    <div class="content">
+        <div class="big rv">如果一切都<span class="sig">突出</span>,<br>那就没有<span class="sig">重点</span>。</div>
+        <div class="attr rv d2">— 演示设计法则</div>
+    </div>
+</section>
+
+<section class="slide" aria-label="三条铁律">
+    <div class="content">
+        <span class="eyebrow rv">三条铁律</span>
+        <h2 class="rv d1" style="margin-bottom:0.5rem">记住<span class="sig">三件事</span></h2>
+        <div class="big-list">
+            <div class="bl-row rv d2"><span class="bl-num">01</span><div><h3>字够大</h3><p>站在最后一排也能看清,这是底线。</p></div></div>
+            <div class="bl-row rv d3"><span class="bl-num">02</span><div><h3>话够短</h3><p>一页只讲一句话,长句拆成短句。</p></div></div>
+            <div class="bl-row rv d4"><span class="bl-num">03</span><div><h3>色够省</h3><p>黑白为主,信号色只点睛,绝不滥用。</p></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide invert mega" aria-label="对比">
+    <div class="content">
+        <span class="eyebrow rv">对比的力量</span>
+        <div class="mega-num rv d1">1</div>
+        <div class="mega-cap rv d2">页 · 一个焦点</div>
+        <p class="mega-sub rv d3">观众的眼睛一次只能看一个地方。把那个地方做到最大、最清楚。</p>
+    </div>
+</section>
+
+<section class="slide statement" aria-label="陈述2">
+    <div class="content">
+        <div class="big rv">留白不是<span class="sig">浪费</span>,<br>是给重点<span class="sig">让路</span>。</div>
+        <div class="attr rv d2">— 演示设计法则</div>
+    </div>
+</section>
+
+<section class="slide" aria-label="收尾">
+    <div class="content">
+        <span class="eyebrow rv">最后</span>
+        <h2 class="rv d1" style="max-width:16ch">下次打开演示软件前,<br>先<span class="sig">想清楚</span>这一页要讲什么。</h2>
+        <p class="lead rv d2" style="margin-top:1rem;max-width:30ch">想不清楚,就别急着做。空白的页面,好过塞满的页面。</p>
+    </div>
+</section>
+
+</main>
+<script>
+class Deck{
+    constructor(){this.slides=[...document.querySelectorAll('.slide')];this.i=0;this.n=this.slides.length;this.progress=document.getElementById('progress');this.idx=document.getElementById('idx');this.dotsWrap=document.getElementById('dots');this.init()}
+    init(){
+        this.slides.forEach((_,k)=>{const b=document.createElement('button');b.className='nav-dot'+(k===0?' active':'');b.onclick=()=>this.go(k);this.dotsWrap.appendChild(b)});
+        this.dots=[...this.dotsWrap.children];
+        const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){this.i=this.slides.indexOf(e.target);this.ui();e.target.querySelectorAll('.rv').forEach(el=>el.classList.add('in'))}})},{threshold:0.55});
+        this.slides.forEach(s=>io.observe(s));
+        this.slides[0].querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+        addEventListener('keydown',e=>{if(['ArrowDown','ArrowRight',' '].includes(e.key)){e.preventDefault();this.next()}else if(['ArrowUp','ArrowLeft'].includes(e.key)){e.preventDefault();this.prev()}});
+        let sy=0;addEventListener('touchstart',e=>sy=e.touches[0].clientY,{passive:true});addEventListener('touchend',e=>{const d=sy-e.changedTouches[0].clientY;if(Math.abs(d)>60)d>0?this.next():this.prev()},{passive:true});
+        let lw=0;addEventListener('wheel',e=>{const t=Date.now();if(t-lw<900)return;lw=t;e.deltaY>0?this.next():this.prev()},{passive:true});
+    }
+    next(){if(this.i<this.n-1)this.go(this.i+1)}prev(){if(this.i>0)this.go(this.i-1)}
+    go(k){this.i=k;this.slides[k].scrollIntoView({behavior:'smooth'});this.ui()}
+    ui(){this.progress.style.width=((this.i+1)/this.n*100)+'%';this.idx.innerHTML=`<span class="cur">${String(this.i+1).padStart(2,'0')}</span> / ${String(this.n).padStart(2,'0')}`;this.dots&&this.dots.forEach((d,k)=>d.classList.toggle('active',k===this.i))}
+}
+addEventListener('DOMContentLoaded',()=>new Deck());
+</script>
+</body>
+</html>

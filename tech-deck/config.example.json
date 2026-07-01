@@ -1,0 +1,13 @@
+{
+  "active": {
+    "provider": "claude-native",
+    "style": null,
+    "outputDir": ".",
+    "fontSize": "medium"
+  },
+  "providers": {
+    "claude-native": {
+      "description": "Claude 直接生成 HTML，零依赖"
+    }
+  }
+}

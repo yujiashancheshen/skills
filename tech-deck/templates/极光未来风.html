@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>极光未来风 · 样例</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+    --bg:#0B1437;--bg-elev:#111B42;--bg-glass:rgba(255,255,255,0.06);
+    --fg:#F0F4FF;--fg-dim:#A6B0D4;--fg-faint:#6B7399;--line:rgba(255,255,255,0.12);
+    --cyan:#22D3EE;--violet:#A78BFA;--pink:#F0ABFC;
+    --aurora:linear-gradient(120deg,#22D3EE,#A78BFA 50%,#F0ABFC);
+    --font:'Space Grotesk','Noto Sans SC',sans-serif;
+    --hero:clamp(2.8rem,7vw,5.8rem);--h2:clamp(1.6rem,3.8vw,3rem);--h3:clamp(1.05rem,1.8vw,1.45rem);
+    --body:clamp(0.95rem,1.35vw,1.2rem);--small:clamp(0.8rem,1vw,0.95rem);--label:clamp(0.62rem,0.85vw,0.75rem);
+    --pad:clamp(2.5rem,6vw,7rem);--gap:clamp(1.2rem,2.5vw,2.2rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden}html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;letter-spacing:-0.015em}
+.slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;flex-direction:column;position:relative;background:var(--bg)}
+.aurora-bg{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;opacity:0.55}
+.ab-1{width:46vw;height:46vw;max-width:620px;max-height:620px;top:-15%;right:-10%;background:radial-gradient(circle,#22D3EE,transparent 70%)}
+.ab-2{width:40vw;height:40vw;max-width:540px;max-height:540px;bottom:-20%;left:-12%;background:radial-gradient(circle,#A78BFA,transparent 70%)}
+.ab-3{width:30vw;height:30vw;max-width:400px;max-height:400px;top:30%;left:40%;background:radial-gradient(circle,#F0ABFC,transparent 70%);opacity:0.35}
+.content{flex:1;display:flex;flex-direction:column;justify-content:center;max-height:100%;overflow:hidden;padding:var(--pad);gap:var(--gap);position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:var(--label);font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--cyan)}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--aurora)}
+h1{font-size:var(--hero);font-weight:700;line-height:1.04;letter-spacing:-0.03em}
+h2{font-size:var(--h2);font-weight:700;line-height:1.1;letter-spacing:-0.02em}
+h3{font-size:var(--h3);font-weight:600;line-height:1.2}
+.grad-text{background:var(--aurora);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+p{font-size:var(--body);line-height:1.6;color:var(--fg-dim)}
+.lead{font-size:var(--h3);color:var(--fg-dim);line-height:1.5;font-weight:400}
+.hl{color:var(--fg);font-weight:600}.hl-c{color:var(--cyan);font-weight:600}
+.glass{background:var(--bg-glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:18px}
+.hero .content{justify-content:center}.hero h1{max-width:15ch}.hero .lead{max-width:40ch;margin-top:0.6rem}
+.hero-tags{display:flex;gap:0.6rem;margin-top:1.5rem;flex-wrap:wrap}
+.tag{padding:0.45rem 1.1rem;border-radius:100px;font-size:var(--small);font-weight:500;color:var(--fg);border:1px solid var(--line);background:var(--bg-glass)}
+.stat-hero .content{justify-content:center;align-items:flex-start}
+.stat-hero .big-num{font-size:clamp(5rem,17vw,15rem);font-weight:700;line-height:0.88;letter-spacing:-0.04em}
+.stat-hero .stat-caption{font-size:var(--h3);color:var(--fg-dim);max-width:30ch}
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2vw,1.5rem);flex:1;max-height:60vh;align-content:center}
+.card{padding:clamp(1.3rem,2.2vw,2rem);display:flex;flex-direction:column;gap:0.7rem;transition:transform 0.3s ease,box-shadow 0.3s ease,border-color 0.3s ease;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);border-color:rgba(167,139,250,0.5);box-shadow:0 0 30px rgba(167,139,250,0.2)}
+.card-icon{width:clamp(38px,3.5vw,46px);height:clamp(38px,3.5vw,46px);border-radius:12px;background:var(--aurora);display:flex;align-items:center;justify-content:center;color:#0B1437;font-weight:700;font-size:var(--body)}
+.card h3{color:var(--fg)}.card p{font-size:clamp(0.86rem,1.2vw,1rem);line-height:1.5}
+.dash{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1rem,2vw,1.5rem);flex:1;max-height:60vh;align-content:center}
+.metric{padding:clamp(1.3rem,2.2vw,1.9rem);display:flex;flex-direction:column;gap:0.5rem}
+.metric .n{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1;letter-spacing:-0.03em;color:var(--fg)}
+.metric .n .u{font-size:0.5em;background:var(--aurora);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-left:0.2rem}
+.metric .l{font-size:var(--small);color:var(--fg-dim)}
+.flow{display:flex;flex-direction:column;gap:0;flex:1;max-height:62vh;justify-content:center}
+.flow-step{display:grid;grid-template-columns:auto 1fr;gap:clamp(1rem,2vw,1.6rem);padding:clamp(0.7rem,1.4vw,1.1rem) 0;align-items:center}
+.flow-circle{width:clamp(2.2rem,3vw,2.8rem);height:clamp(2.2rem,3vw,2.8rem);border-radius:50%;background:var(--bg-glass);border:1.5px solid var(--violet);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:var(--small);color:var(--violet);flex-shrink:0}
+.flow-body h3{color:var(--fg)}.flow-body p{font-size:var(--small);line-height:1.45}
+.statement .content{justify-content:center;align-items:center;text-align:center}
+.statement .big{font-size:clamp(2rem,5vw,4rem);font-weight:700;line-height:1.25;letter-spacing:-0.02em;max-width:20ch}
+.statement .attr{margin-top:2rem;font-size:var(--small);color:var(--fg-faint);letter-spacing:0.12em}
+.progress{position:fixed;top:0;left:0;height:2px;background:var(--aurora);z-index:1000;transition:width 0.5s cubic-bezier(0.22,1,0.36,1)}
+.idx{position:fixed;bottom:clamp(1rem,2.5vw,2rem);right:clamp(1.5rem,3.5vw,3rem);font-size:var(--small);font-weight:600;color:var(--fg-faint);z-index:100}
+.idx .cur{color:var(--cyan)}
+.dots{position:fixed;right:clamp(1rem,2vw,1.8rem);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:0.6rem;z-index:100}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:var(--fg-faint);opacity:0.4;border:none;cursor:pointer;padding:0;transition:all 0.3s ease}
+.nav-dot.active{opacity:1;background:var(--violet);transform:scale(1.5)}
+.rv{opacity:0;transform:translateY(20px);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1)}
+.rv.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}.d4{transition-delay:0.32s}.d5{transition-delay:0.4s}
+@media (max-height:740px){:root{--pad:clamp(1.8rem,4vw,3.5rem);--gap:clamp(0.9rem,2vw,1.5rem)}}
+@media (max-height:600px){:root{--hero:clamp(2rem,5vw,3rem);--h2:clamp(1.3rem,3vw,1.9rem)}.dots{display:none}}
+@media (max-width:820px){.card-grid,.dash{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.2s!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="idx" id="idx"><span class="cur">01</span> / 07</div>
+<nav class="dots" id="dots"></nav>
+<main>
+
+<section class="slide hero" aria-label="封面">
+    <div class="aurora-bg ab-1"></div><div class="aurora-bg ab-2"></div><div class="aurora-bg ab-3"></div>
+    <div class="content">
+        <span class="eyebrow rv">极光未来风 · DECK TEMPLATE</span>
+        <h1 class="rv d1">面向<span class="grad-text">未来</span>的表达</h1>
+        <p class="lead rv d2">前沿的内容,值得前沿的呈现。玻璃质感、流光溢彩,让科技感扑面而来。</p>
+        <div class="hero-tags rv d3"><span class="tag">玻璃拟态</span><span class="tag">极光渐变</span><span class="tag">AI 产品向</span></div>
+    </div>
+</section>
+
+<section class="slide stat-hero" aria-label="核心">
+    <div class="aurora-bg ab-2"></div><div class="aurora-bg ab-3"></div>
+    <div class="content">
+        <span class="eyebrow rv">视觉张力</span>
+        <div class="big-num grad-text rv d1">∞</div>
+        <p class="stat-caption rv d2"><span class="hl">第一眼,就要惊艳。</span>当内容关乎前沿与未来,视觉本身就是信息的一部分。</p>
+    </div>
+</section>
+
+<section class="slide" aria-label="三个元素">
+    <div class="aurora-bg ab-1"></div>
+    <div class="content">
+        <span class="eyebrow rv">壹 · 三个元素</span>
+        <h2 class="rv d1">未来感来自<span class="hl-c">这些</span></h2>
+        <div class="card-grid">
+            <div class="card glass rv d2"><div class="card-icon">◇</div><h3>玻璃拟态</h3><p>半透明磨砂卡片,层层叠叠,像悬浮在空间里。</p></div>
+            <div class="card glass rv d3"><div class="card-icon">✦</div><h3>极光渐变</h3><p>青紫粉流动的光晕,科技与浪漫的结合。</p></div>
+            <div class="card glass rv d4"><div class="card-icon">◈</div><h3>霓虹发光</h3><p>关键元素带微光,在暗背景中格外醒目。</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" aria-label="数据">
+    <div class="aurora-bg ab-2"></div>
+    <div class="content">
+        <span class="eyebrow rv">贰 · 视觉指标</span>
+        <h2 class="rv d1">克制中的<span class="hl-c">绚烂</span></h2>
+        <div class="dash">
+            <div class="metric glass rv d2"><div class="n">1<span class="u">套</span></div><div class="l"><span class="hl">渐变色谱</span> — 全场统一,不混搭多套配色</div></div>
+            <div class="metric glass rv d2"><div class="n">20<span class="u">px</span></div><div class="l"><span class="hl">磨砂模糊</span> — 玻璃卡片的标志性质感</div></div>
+            <div class="metric glass rv d3"><div class="n">2-3<span class="u">处</span></div><div class="l"><span class="hl">光晕焦点</span> — 光团点到为止,避免糊成一片</div></div>
+            <div class="metric glass rv d3"><div class="n">100<span class="u">%</span></div><div class="l"><span class="hl">深色背景</span> — 暗底才能衬托光的流动</div></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" aria-label="流程">
+    <div class="aurora-bg ab-1"></div><div class="aurora-bg ab-3"></div>
+    <div class="content">
+        <span class="eyebrow rv">叁 · 使用建议</span>
+        <h2 class="rv d1">惊艳但<span class="hl-c">不喧宾夺主</span></h2>
+        <div class="flow">
+            <div class="flow-step rv d2"><div class="flow-circle">1</div><div class="flow-body"><h3>背景退后</h3><p>光晕只做氛围,绝不抢文字的可读性。</p></div></div>
+            <div class="flow-step rv d3"><div class="flow-circle">2</div><div class="flow-body"><h3>渐变点睛</h3><p>只在标题关键词和强调元素上用渐变。</p></div></div>
+            <div class="flow-step rv d4"><div class="flow-circle">3</div><div class="flow-body"><h3>留足对比</h3><p>玻璃卡片上的文字必须足够清晰可读。</p></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide statement" aria-label="金句">
+    <div class="aurora-bg ab-1"></div><div class="aurora-bg ab-2"></div><div class="aurora-bg ab-3"></div>
+    <div class="content">
+        <div class="big rv">最好的<span class="grad-text">特效</span>,<br>是让人记住<span class="grad-text">内容</span>。</div>
+        <div class="attr rv d2">— 演示设计法则</div>
+    </div>
+</section>
+
+<section class="slide" aria-label="收尾">
+    <div class="aurora-bg ab-2"></div>
+    <div class="content">
+        <span class="eyebrow rv">肆 · 记住</span>
+        <h2 class="rv d1" style="max-width:18ch">炫酷是<span class="hl-c">手段</span>,<br>不是<span class="hl-c">目的</span>。</h2>
+        <p class="lead rv d2" style="margin-top:1rem;max-width:32ch">当视觉服务于内容,惊艳才有意义。否则只是一场华丽的空洞。</p>
+    </div>
+</section>
+
+</main>
+<script>
+class Deck{
+    constructor(){this.slides=[...document.querySelectorAll('.slide')];this.i=0;this.n=this.slides.length;this.progress=document.getElementById('progress');this.idx=document.getElementById('idx');this.dotsWrap=document.getElementById('dots');this.init()}
+    init(){
+        this.slides.forEach((_,k)=>{const b=document.createElement('button');b.className='nav-dot'+(k===0?' active':'');b.onclick=()=>this.go(k);this.dotsWrap.appendChild(b)});
+        this.dots=[...this.dotsWrap.children];
+        const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){this.i=this.slides.indexOf(e.target);this.ui();e.target.querySelectorAll('.rv').forEach(el=>el.classList.add('in'))}})},{threshold:0.55});
+        this.slides.forEach(s=>io.observe(s));
+        this.slides[0].querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+        addEventListener('keydown',e=>{if(['ArrowDown','ArrowRight',' '].includes(e.key)){e.preventDefault();this.next()}else if(['ArrowUp','ArrowLeft'].includes(e.key)){e.preventDefault();this.prev()}});
+        let sy=0;addEventListener('touchstart',e=>sy=e.touches[0].clientY,{passive:true});addEventListener('touchend',e=>{const d=sy-e.changedTouches[0].clientY;if(Math.abs(d)>60)d>0?this.next():this.prev()},{passive:true});
+        let lw=0;addEventListener('wheel',e=>{const t=Date.now();if(t-lw<900)return;lw=t;e.deltaY>0?this.next():this.prev()},{passive:true});
+    }
+    next(){if(this.i<this.n-1)this.go(this.i+1)}prev(){if(this.i>0)this.go(this.i-1)}
+    go(k){this.i=k;this.slides[k].scrollIntoView({behavior:'smooth'});this.ui()}
+    ui(){this.progress.style.width=((this.i+1)/this.n*100)+'%';this.idx.innerHTML=`<span class="cur">${String(this.i+1).padStart(2,'0')}</span> / ${String(this.n).padStart(2,'0')}`;this.dots&&this.dots.forEach((d,k)=>d.classList.toggle('active',k===this.i))}
+}
+addEventListener('DOMContentLoaded',()=>new Deck());
+</script>
+</body>
+</html>

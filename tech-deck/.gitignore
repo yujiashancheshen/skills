@@ -1,0 +1,14 @@
+# 生成的演示文稿输出到用户 CWD，不在本仓库；templates/*.html 为核心样例需入库
+
+# 临时预览
+preview/
+
+# 本地配置（含 API key）
+config.json
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store

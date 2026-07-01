@@ -1,0 +1,16 @@
+{
+  "name": "tech-deck",
+  "version": "1.0.0",
+  "description": "把技术内容变成专业 HTML 演示文稿。5 种风格模板可选，内置大纲确认和视口自动校验。",
+  "author": {
+    "name": "yujiashancheshen"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "presentation",
+    "slides",
+    "html",
+    "tech-deck",
+    "演示文稿"
+  ]
+}
