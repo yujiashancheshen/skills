@@ -1,0 +1,7 @@
+interface:
+  display_name: "PPT Beautify"
+  short_description: "Beautify PPTs with editable text"
+  default_prompt: "Use $ppt-beautify to beautify a draft PPT using a reference PPT while keeping all ordinary text editable."
+
+policy:
+  allow_implicit_invocation: true
