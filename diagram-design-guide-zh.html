@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagram Design 中文图型手册</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@500&amp;family=Noto+Sans+SC:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --page: #f3f5f8;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --ink: #182235;
+      --muted: #5d6879;
+      --soft: #8b95a4;
+      --rule: #dce2e9;
+      --blue: #2563a6;
+      --blue-tint: #eaf2fb;
+      --orange: #d97732;
+      --orange-tint: #fff4e9;
+      --green: #397a60;
+      --purple: #6758b8;
+      --sans: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --mono: 'Geist Mono', ui-monospace, monospace;
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: var(--page);
+      color: var(--ink);
+      font-family: var(--sans);
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .app {
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+    }
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(280px, 420px);
+      gap: 24px;
+      align-items: center;
+      padding: 16px 20px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--rule);
+    }
+    .brand { min-width: 0; }
+    .brand-row { display: flex; align-items: baseline; gap: 12px; }
+    h1 { margin: 0; font-size: 20px; line-height: 1.2; letter-spacing: 0; }
+    .count {
+      color: var(--blue);
+      font-family: var(--mono);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .brand p { margin: 5px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .search {
+      width: 100%;
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      outline: none;
+      background: var(--surface-2);
+      color: var(--ink);
+    }
+    .search:focus { border-color: var(--blue); background: var(--surface); }
+    .workspace {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 296px minmax(520px, 1fr) 320px;
+    }
+    .sidebar {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      background: var(--surface);
+      border-right: 1px solid var(--rule);
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .filter, .variant {
+      min-height: 32px;
+      padding: 0 10px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .filter:hover, .variant:hover { border-color: #aeb8c5; color: var(--ink); }
+    .filter.active, .variant.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+    }
+    .variant:disabled { cursor: not-allowed; opacity: .35; }
+    .type-list {
+      overflow-y: auto;
+      padding: 8px;
+    }
+    .type-item {
+      width: 100%;
+      min-height: 68px;
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: start;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+    .type-item:hover { background: var(--surface-2); }
+    .type-item.active { border-color: #abc4df; background: var(--blue-tint); }
+    .index {
+      padding-top: 2px;
+      color: var(--soft);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+    .type-item.active .index { color: var(--blue); }
+    .type-copy { min-width: 0; }
+    .type-name {
+      display: block;
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .type-en {
+      display: block;
+      overflow: hidden;
+      margin-top: 3px;
+      color: var(--soft);
+      font-family: var(--mono);
+      font-size: 9px;
+      line-height: 1.3;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .kind {
+      padding: 3px 5px;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--soft);
+      font-family: var(--mono);
+      font-size: 8px;
+      white-space: nowrap;
+    }
+    .empty { padding: 28px 16px; color: var(--muted); font-size: 13px; text-align: center; }
+    .preview-panel {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      background: var(--surface-2);
+    }
+    .preview-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 56px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--rule);
+      background: var(--surface);
+    }
+    .variants { display: flex; gap: 6px; }
+    .open-link {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .open-link:hover { color: var(--orange); }
+    .preview-wrap { min-height: 0; padding: 16px; }
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 480px;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      background: #fff;
+    }
+    .detail {
+      min-height: 0;
+      overflow-y: auto;
+      padding: 24px 22px;
+      background: var(--surface);
+      border-left: 1px solid var(--rule);
+    }
+    .detail-code {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .08em;
+    }
+    .detail h2 { margin: 0; font-size: 22px; line-height: 1.25; letter-spacing: 0; }
+    .detail-en { margin: 5px 0 20px; color: var(--soft); font-family: var(--mono); font-size: 10px; }
+    .kind-banner {
+      margin: 0 0 20px;
+      padding: 10px 12px;
+      border-left: 3px solid var(--blue);
+      background: var(--blue-tint);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .detail section { margin-top: 22px; }
+    .detail h3 {
+      margin: 0 0 8px;
+      color: var(--soft);
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: .1em;
+    }
+    .detail p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .question {
+      padding: 12px;
+      border: 1px solid #f0c9a6;
+      border-radius: 6px;
+      background: var(--orange-tint);
+      color: #944c1d !important;
+      font-weight: 500;
+    }
+    .example {
+      padding: 12px;
+      border: 1px solid #bfd8cc;
+      border-radius: 6px;
+      background: #eff8f4;
+      color: #2d654f !important;
+    }
+    .related {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .related span {
+      padding: 5px 7px;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    @media (max-width: 1100px) {
+      body { overflow: auto; }
+      .app { height: auto; min-height: 100%; }
+      .workspace { grid-template-columns: 260px minmax(0, 1fr); grid-template-rows: 700px auto; }
+      .detail { grid-column: 1 / -1; border-top: 1px solid var(--rule); border-left: 0; }
+    }
+    @media (max-width: 720px) {
+      .topbar { grid-template-columns: 1fr; gap: 12px; padding: 14px; }
+      .brand-row { align-items: center; justify-content: space-between; }
+      h1 { font-size: 18px; }
+      .workspace { display: block; }
+      .sidebar { height: 320px; border-right: 0; border-bottom: 1px solid var(--rule); }
+      .filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; }
+      .preview-panel { height: 620px; }
+      .preview-toolbar { align-items: flex-start; flex-direction: column; }
+      .preview-wrap { padding: 10px; }
+      .detail { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-row">
+          <h1>Diagram Design 中文图型手册</h1>
+          <span class="count" id="count">55 ENTRIES</span>
+        </div>
+        <p>39 类基础图型，加上子类型、专用模板、导入示例和动画语义模式。</p>
+      </div>
+      <input class="search" id="search" type="search" placeholder="搜索图型、用途或示例，例如：架构、比较、数据库" aria-label="搜索图型">
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar">
+        <nav class="filters" id="filters" aria-label="图型类别"></nav>
+        <div class="type-list" id="type-list" role="listbox" aria-label="图型列表"></div>
+      </aside>
+
+      <main class="preview-panel">
+        <div class="preview-toolbar">
+          <div class="variants" id="variants" aria-label="样式版本">
+            <button class="variant active" data-variant="">浅色精简</button>
+            <button class="variant" data-variant="-dark">深色精简</button>
+            <button class="variant" data-variant="-full">长文版</button>
+          </div>
+          <a class="open-link" id="open-link" href="#" target="_blank" rel="noopener">单独打开示例 ↗</a>
+        </div>
+        <div class="preview-wrap">
+          <iframe id="preview" title="图型示例预览"></iframe>
+        </div>
+      </main>
+
+      <aside class="detail" aria-live="polite">
+        <p class="detail-code" id="detail-code"></p>
+        <h2 id="detail-title"></h2>
+        <p class="detail-en" id="detail-en"></p>
+        <p class="kind-banner" id="kind-banner"></p>
+        <section>
+          <h3>它的作用</h3>
+          <p id="detail-purpose"></p>
+        </section>
+        <section>
+          <h3>适合回答</h3>
+          <p class="question" id="detail-question"></p>
+        </section>
+        <section>
+          <h3>典型示例</h3>
+          <p class="example" id="detail-example"></p>
+        </section>
+        <section>
+          <h3>容易混淆</h3>
+          <div class="related" id="detail-related"></div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const categories = [
+      ['all', '全部'],
+      ['system', '系统设计'],
+      ['flow', '流程行为'],
+      ['data', '数据设计'],
+      ['analysis', '分析图表'],
+      ['product', '产品协作'],
+      ['special', '模板与导入']
+    ];
+
+    const entries = [
+      { id:'architecture', zh:'软件架构图', en:'Architecture', cat:'system', kind:'基础图型', purpose:'展示一个系统由哪些组件组成，以及组件之间如何调用、传递数据或跨越边界。', question:'系统由什么构成？请求和数据在组件之间怎样流动？', example:'Web 请求经过 CDN 和应用服务，再访问内容服务与数据库。', related:['部署图','高层架构图','数据流图'] },
+      { id:'flowchart', zh:'流程图', en:'Flowchart', cat:'flow', kind:'基础图型', purpose:'表达包含判断、分支、循环和终止条件的处理逻辑。', question:'这件事按什么规则向下执行？遇到不同条件会走哪条路？', example:'退款申请经过资格校验、金额判断、人工复核后完成或拒绝。', related:['状态机','业务流程图','时序图'] },
+      { id:'sequence', zh:'时序图', en:'Sequence', cat:'flow', kind:'基础图型', purpose:'按时间顺序展示多个参与者之间的消息、调用和返回。', question:'谁先调用谁？请求、响应和异常分支发生的先后顺序是什么？', example:'用户登录时，浏览器、网关、认证服务和数据库之间的调用。', related:['流程图','数据流图','OAuth 时序图'] },
+      { id:'state', zh:'状态机图', en:'State Machine', cat:'flow', kind:'基础图型', purpose:'展示一个对象可能处于哪些状态，以及什么事件会触发状态转换。', question:'对象当前是什么状态？什么条件下能够进入下一个状态？', example:'订单从待支付、已支付、履约中到已完成或已取消。', related:['流程图','时间线','生命周期'] },
+      { id:'er', zh:'ER 数据模型图', en:'ER / Data Model', cat:'data', kind:'基础图型', purpose:'展示业务实体、关键字段以及实体之间的一对一、一对多或多对多关系。', question:'业务数据有哪些核心实体？它们之间是什么关系？', example:'用户、订单、商品和订单明细之间的逻辑数据模型。', related:['数据库 Schema','UML 类图','嵌套图'] },
+      { id:'timeline', zh:'时间线', en:'Timeline', cat:'flow', kind:'基础图型', purpose:'把关键事件、里程碑或版本变化放在统一时间轴上。', question:'重要事情在什么时候发生？前后演进过程是什么？', example:'产品从立项、内测、公测到正式发布的关键节点。', related:['甘特图','状态机','用户旅程'] },
+      { id:'swimlane', zh:'泳道图', en:'Swimlane', cat:'flow', kind:'基础图型', purpose:'按角色或部门划分责任区，展示跨团队流程和交接点。', question:'每一步由谁负责？工作在哪些角色之间交接？', example:'销售签约后依次交给财务收款、教务排班和老师履约。', related:['业务流程图','时序图','用户旅程'] },
+      { id:'quadrant', zh:'四象限图', en:'Quadrant', cat:'analysis', kind:'基础图型', purpose:'使用两个维度对多个对象进行定位、比较和优先级判断。', question:'这些方案在两个关键指标上分别处于什么位置？', example:'按业务价值和实施成本给需求做优先级分类。', related:['散点图','雷达图','咨询风象限'] },
+      { id:'nested', zh:'嵌套关系图', en:'Nested', cat:'system', kind:'基础图型', purpose:'通过层层包含表达范围、边界、归属或上下文。', question:'某个元素属于哪个范围？范围内部还包含哪些层级？', example:'集团包含事业部，事业部包含产品线，产品线包含系统。', related:['树图','分层图','架构图'] },
+      { id:'tree', zh:'树状层级图', en:'Tree', cat:'system', kind:'基础图型', purpose:'从一个根节点向下拆解父子关系和层级结构。', question:'一个整体可以怎样逐层分解？每个节点有哪些直接子项？', example:'公司目标拆成战略主题、关键结果和执行项目。', related:['组织架构图','嵌套图','块分解树'] },
+      { id:'org-chart', zh:'组织架构图', en:'Org Chart', cat:'product', kind:'基础图型', purpose:'展示人员、团队、汇报线、职责归属和升级路径。', question:'谁向谁汇报？某项职责由哪个团队或负责人承担？', example:'研发中心下设平台、业务、质量和基础设施团队。', related:['树图','泳道图','依赖图'] },
+      { id:'layers', zh:'分层架构图', en:'Layer Stack', cat:'system', kind:'基础图型', purpose:'展示从上层抽象到底层基础的稳定层级，以及每层承担的职责。', question:'系统或能力分成哪几层？上层依赖哪些下层能力？', example:'应用层、领域层、平台层和基础设施层的能力栈。', related:['软件架构图','嵌套图','高层架构图'] },
+      { id:'venn', zh:'维恩图', en:'Venn', cat:'analysis', kind:'基础图型', purpose:'展示两到三个集合之间的交集、差异和共同区域。', question:'这些群体或概念有哪些共同点，又有哪些各自独有部分？', example:'用户需求、技术可行性和商业价值的交集定义产品机会。', related:['四象限图','嵌套图','雷达图'] },
+      { id:'pyramid', zh:'金字塔 / 漏斗图', en:'Pyramid / Funnel', cat:'analysis', kind:'基础图型', purpose:'表达由宽到窄的筛选、转化损耗，或由底到顶的层级与优先级。', question:'数量在哪些阶段逐步减少？能力或目标如何层层向上支撑？', example:'访问、注册、试听、购买和续费的转化漏斗。', related:['Sankey','柱状图','分层图'] },
+      { id:'radar', zh:'雷达图', en:'Radar / Spider', cat:'analysis', kind:'基础图型', purpose:'在多个统一维度上比较一个或多个对象的能力轮廓。', question:'不同方案各自强在哪些维度，短板又在哪里？', example:'比较三款数据库在性能、成本、生态、安全和运维上的表现。', related:['极坐标图','四象限图','柱状图'] },
+      { id:'polar', zh:'极坐标棒棒糖图', en:'Polar Chart', cat:'analysis', kind:'基础图型', purpose:'把一组周期性或环形分类的数据按角度排布，用半径表达大小。', question:'同一序列在一圈分类中的高低分布是什么？', example:'一周七天的访问量或一年十二个月的事故数量。', related:['雷达图','柱状图','折线图'] },
+      { id:'loop', zh:'闭环 / 飞轮图', en:'Loop / Flywheel', cat:'flow', kind:'基础图型', purpose:'展示若干步骤首尾相接、持续强化并积累价值的循环机制。', question:'最后一步如何反过来推动第一步？循环靠什么持续增强？', example:'内容生产带来流量，流量形成反馈，反馈继续优化内容。', related:['流程图','状态机','终端风闭环'] },
+      { id:'datalake', zh:'数据湖架构图', en:'Data Lake', cat:'data', kind:'专用图型', purpose:'展示多源数据进入数据湖后，经过存储、计算、治理再被分析消费的全景。', question:'数据湖包含哪些区域？原始数据怎样变成可用的数据产品？', example:'业务库、日志和文件进入对象存储，再由批流计算和目录治理支撑 BI。', related:['奖牌湖仓图','数据平台集成图','高层数据架构'] },
+      { id:'bar', zh:'柱状图', en:'Bar Chart', cat:'analysis', kind:'基础图型', purpose:'对有限数量的分类进行精确的数值大小比较。', question:'哪个类别更高或更低？各项之间相差多少？', example:'不同业务线的收入、成本、工单量或完成率对比。', related:['极坐标图','折线图','坡度图'] },
+      { id:'line', zh:'折线图', en:'Line Chart', cat:'analysis', kind:'基础图型', purpose:'展示一个或多个指标随连续时间变化的趋势、波动和拐点。', question:'指标随时间怎样变化？何时出现增长、下降或异常？', example:'过去十二个月的活跃用户、收入和退款率趋势。', related:['时间线','坡度图','排名变化图'] },
+      { id:'gantt', zh:'甘特图', en:'Gantt', cat:'product', kind:'基础图型', purpose:'把任务、阶段、持续时间、依赖和里程碑安排到项目时间轴上。', question:'项目在什么时候做什么？任务之间有没有重叠或前后依赖？', example:'一个季度内完成调研、设计、开发、测试和上线。', related:['时间线','看板','故事地图'] },
+      { id:'scatter', zh:'散点图', en:'Scatter Plot', cat:'analysis', kind:'基础图型', purpose:'展示两个数值变量之间的关系、聚类、异常点和相关趋势。', question:'两个指标是否相关？哪些对象偏离了整体规律？', example:'接口吞吐量与响应延迟之间的关系。', related:['气泡图','蜂群图','四象限图'] },
+      { id:'bubble', zh:'气泡图', en:'Bubble Chart', cat:'analysis', kind:'子类型', purpose:'在散点图的两个坐标维度之外，再用气泡面积表达第三个数值。', question:'对象在两个指标上的位置如何，同时规模有多大？', example:'产品按增长率、利润率定位，并用收入规模决定气泡大小。', related:['散点图','四象限图','Treemap'] },
+      { id:'beeswarm', zh:'蜂群图', en:'Beeswarm', cat:'analysis', kind:'子类型', purpose:'让每个样本以一个点出现，并错开重叠，从而查看单变量分布和密集区。', question:'数据主要集中在哪里？有没有长尾和离群样本？', example:'一批接口请求延迟的真实分布，而不仅是平均值。', related:['散点图','山脊图','箱线图'] },
+      { id:'medallion', zh:'奖牌湖仓分层图', en:'Medallion', cat:'data', kind:'专用图型', purpose:'按 Bronze、Silver、Gold 等质量层级展示数据逐步清洗和可用化。', question:'原始数据经过哪些质量层，最终怎样成为可信数据产品？', example:'原始埋点进入铜层，清洗到银层，再聚合成金层指标。', related:['数据湖架构','分层图','数据平台集成图'] },
+      { id:'high-level', zh:'高层系统架构图', en:'High-Level', cat:'system', kind:'专用图型', purpose:'用较少组件概括端到端系统，突出主链路、平台边界和基础设施。', question:'管理层或新成员需要先理解系统的哪几个大块？', example:'数据源进入 Kubernetes 数据平台，再服务分析和应用。', related:['软件架构图','分层图','部署图'] },
+      { id:'process', zh:'多参与方业务流程图', en:'Process', cat:'flow', kind:'基础图型', purpose:'沿阶段展示多角色活动和数据交接，比普通流程图更强调端到端业务推进。', question:'一项业务如何跨多个参与方完成？每个阶段交付什么？', example:'客户申请、风控审核、合同签署、放款和贷后管理。', related:['泳道图','流程图','数据流图'] },
+      { id:'data-flow', zh:'数据流图', en:'Data Flow', cat:'data', kind:'基础图型', purpose:'展示数据从来源经过处理、队列和存储到消费者的移动路径。', question:'数据从哪里来、经过什么处理、最终被谁使用？', example:'事件从客户端进入采集服务，经消息队列处理后写入数仓。', related:['软件架构图','数据平台集成图','Sankey'] },
+      { id:'dp-integration', zh:'数据平台集成图', en:'DP Integration', cat:'data', kind:'专用图型', purpose:'专门展示数据平台的来源、核心处理层和下游消费方之间的集成拓扑。', question:'企业数据平台怎样连接源系统、治理计算和数据消费者？', example:'CRM、ERP 和日志进入湖仓平台，再输出给 BI、算法与数据 API。', related:['数据流图','数据湖架构','高层架构图'] },
+      { id:'high-level-vertical', zh:'纵向高层架构图', en:'High-Level / Parametric', cat:'system', kind:'布局变体', purpose:'把高层系统架构改为自上而下布局，适合纵向文档或层级强的技术栈。', question:'端到端链路怎样自上而下展开？', example:'入口、处理、数据和平台保障按纵向层级排布。', related:['高层系统架构图','分层图','软件架构图'] },
+      { id:'treemap', zh:'矩形树图', en:'Treemap', cat:'analysis', kind:'基础图型', purpose:'用矩形面积表达整体中的份额，并用嵌套或颜色表达分类。', question:'整体由哪些部分构成？各部分占比有多大？', example:'云成本按产品线和资源类型拆分。', related:['气泡图','柱状图','嵌套图'] },
+      { id:'slopegraph', zh:'坡度图', en:'Slopegraph', cat:'analysis', kind:'折线子类型', purpose:'只比较两个时点之间的变化，突出升降方向、差距和排名交换。', question:'从之前到现在，哪些对象上升、下降或发生反超？', example:'各业务线去年与今年的利润率变化。', related:['折线图','排名变化图','柱状图'] },
+      { id:'ridgeline', zh:'山脊图', en:'Ridgeline', cat:'analysis', kind:'折线子类型', purpose:'把多个组的分布曲线纵向错开，比较形状、峰值和长尾差异。', question:'不同群组的数据分布形态有什么不同？', example:'不同版本接口延迟分布的变化。', related:['蜂群图','折线图','散点图'] },
+      { id:'bump', zh:'排名变化图', en:'Bump Chart', cat:'analysis', kind:'折线子类型', purpose:'展示多个对象在连续时点上的排名升降和交叉变化。', question:'谁在各阶段排名上升或下降？领先者是否发生变化？', example:'五款产品连续六个月的市场份额排名。', related:['折线图','坡度图','时间线'] },
+      { id:'dp-security-matrix', zh:'数据平台权限矩阵', en:'DP Security Matrix', cat:'data', kind:'专用图型', purpose:'以矩阵方式展示角色或组件对不同数据域和操作的允许、限制与禁止。', question:'谁可以读取、写入、管理哪些数据？权限边界在哪里？', example:'分析师、工程师、服务账号对 Bronze、Silver、Gold 层的权限。', related:['数据库 Schema','部署图','治理分层图'] },
+      { id:'it-state', zh:'IT 现状图', en:'IT Current-State', cat:'system', kind:'专用图型', purpose:'记录改造前的遗留系统格局、部门烟囱、重复建设和手工交接。', question:'当前 IT 为什么复杂？问题集中在哪些系统和组织边界？', example:'多个部门各自维护客户系统，通过 Excel 和批处理交换数据。', related:['软件架构图','数据平台集成图','Wardley Map'] },
+      { id:'sankey', zh:'桑基图', en:'Sankey', cat:'analysis', kind:'基础图型', purpose:'用带宽表示数量，从来源到中间阶段再到结果展示拆分与汇聚。', question:'一批数量最终流向哪里？每条路径损失或贡献多少？', example:'获客渠道流量经过注册和试听，最终转化到不同课程。', related:['漏斗图','数据流图','Treemap'] },
+      { id:'fishbone', zh:'鱼骨图', en:'Fishbone', cat:'analysis', kind:'基础图型', purpose:'围绕一个结果，从人员、流程、技术、环境等类别系统梳理潜在原因。', question:'这个问题可能由哪些类别的原因共同导致？', example:'线上事故的人员、代码、基础设施、流程和监控原因分析。', related:['树图','流程图','四象限图'] },
+      { id:'wardley', zh:'Wardley Map', en:'Wardley Map', cat:'analysis', kind:'战略图型', purpose:'把用户价值链放在可见性与演进成熟度坐标中，辅助自研、采购和演进决策。', question:'哪些能力接近用户？哪些正在从定制走向商品化或公共设施？', example:'评估 AI 产品中的模型、推理平台、数据和用户功能应自建还是采购。', related:['IT 现状图','四象限图','依赖图'] },
+      { id:'kanban', zh:'看板', en:'Kanban', cat:'product', kind:'基础图型', purpose:'按工作状态展示任务、在制品数量、阻塞项和流动情况。', question:'工作目前卡在哪里？每个阶段有多少在制任务？', example:'待办、进行中、评审、待发布和已完成的软件任务。', related:['甘特图','故事地图','泳道图'] },
+      { id:'journey', zh:'用户旅程图', en:'User Journey', cat:'product', kind:'基础图型', purpose:'围绕一个用户角色展示体验阶段、行为、触点、情绪变化和痛点。', question:'用户完成目标时经历什么？哪一步感受最差，为什么？', example:'家长从发现课程、比较、试听到报名缴费的体验。', related:['业务流程图','泳道图','时间线'] },
+      { id:'deployment', zh:'部署架构图', en:'Deployment', cat:'system', kind:'基础图型', purpose:'展示软件实际运行在哪里，包括区域、网络、主机、集群、实例、端口和副本。', question:'组件部署在哪个环境？流量怎样跨区域、网络和主机访问？', example:'应用部署在 Kubernetes 集群中，通过负载均衡访问数据库和对象存储。', related:['软件架构图','高层架构图','依赖图'] },
+      { id:'dependency', zh:'依赖关系图', en:'Dependency Graph', cat:'system', kind:'基础图型', purpose:'展示模块、服务或任务之间的依赖、扇入、扇出、关键路径与循环。', question:'什么依赖什么？修改或失败一个节点会影响哪些下游？', example:'构建系统中应用、共享包、代码生成和测试任务的依赖。', related:['树图','软件架构图','部署图'] },
+      { id:'uml-class', zh:'UML 类图', en:'UML Class', cat:'data', kind:'基础图型', purpose:'展示类的属性、方法，以及继承、实现、组合和聚合关系。', question:'面向对象代码中的核心类型如何建模和协作？', example:'订单、订单项、支付和优惠策略的类设计。', related:['ER 图','数据库 Schema','依赖图'] },
+      { id:'story-map', zh:'用户故事地图', en:'Story Map', cat:'product', kind:'基础图型', purpose:'沿用户活动主线组织故事，并按版本或发布切片安排范围。', question:'用户主流程有哪些活动？首版、后续版本分别交付哪些故事？', example:'电商购买旅程按浏览、选购、结算、履约拆出 MVP 和后续版本。', related:['看板','用户旅程图','甘特图'] },
+      { id:'db-schema', zh:'数据库 Schema 图', en:'Database Schema', cat:'data', kind:'基础图型', purpose:'展示真实物理表、字段类型、主外键、约束和索引关系。', question:'数据库具体有哪些表和字段？外键与索引如何定义？', example:'users、orders、order_items 和 payments 的物理表结构。', related:['ER 图','UML 类图','数据平台权限矩阵'] },
+      { id:'sequence-oauth', zh:'OAuth 时序图', en:'Sequence · OAuth', cat:'flow', kind:'专用模板', purpose:'针对授权码、重定向、令牌交换和资源访问场景优化的时序图示例。', question:'浏览器、客户端、授权服务器和资源服务器如何完成 OAuth 授权？', example:'Authorization Code + PKCE 登录流程。', related:['时序图','安全通道图','状态机'] },
+      { id:'import-drawio', zh:'draw.io 重绘示例', en:'Import · draw.io', cat:'special', kind:'导入示例', purpose:'演示从 draw.io 文件提取语义后重新排版，而不是保留原始坐标直接渲染。', question:'已有 draw.io 图怎样在不丢内容的前提下重绘得更清楚？', example:'导入现有系统图，保留节点与关系，重做布局和视觉层级。', related:['Mermaid 重绘','软件架构图','IT 现状图'], single:true },
+      { id:'import-mermaid', zh:'Mermaid 重绘示例', en:'Import · Mermaid', cat:'special', kind:'导入示例', purpose:'演示从 Mermaid 源码提取节点和关系，再使用编辑式 SVG 布局重绘。', question:'已有 Mermaid 图怎样摆脱默认渲染器的拥挤和同质化？', example:'把 Mermaid 流程或时序源码重绘为适合文档和汇报的图。', related:['draw.io 重绘','流程图','时序图'], single:true },
+      { id:'quadrant-consultant', zh:'咨询风四象限', en:'Quadrant · Consultant', cat:'special', kind:'视觉模板', purpose:'四象限图的咨询报告变体，使用更临床、克制的排版和明确场景命名。', question:'怎样把战略方案定位做成适合管理层讨论的一页咨询图？', example:'用影响力与不确定性形成四种业务情景。', related:['四象限图','Wardley Map','雷达图'], single:true },
+      { id:'loop-terminal', zh:'终端风闭环图', en:'Loop · Terminal', cat:'special', kind:'视觉模板', purpose:'闭环图的命令行窗口视觉变体，适合开发工具、工程实践和技术文章。', question:'怎样用开发者熟悉的终端语言表达一个持续反馈循环？', example:'代码、构建、测试、发布、观测再回到代码的工程闭环。', related:['闭环图','流程图','暗色主题'], single:true },
+      { id:'policy-trace-animated', zh:'策略轨迹动画', en:'Policy Trace · Animated', cat:'special', kind:'动画语义模式', purpose:'逐步对照两条规则评估轨迹，突出首个分歧、通过、失败、跳过和未到达。', question:'两套策略在哪一步首次产生不同结果？后续路径怎样变化？', example:'旧权限策略与新策略对同一请求的逐条评估。', related:['流程图','状态机','数据平台权限矩阵'], single:true },
+      { id:'queue-animated', zh:'扇入队列动画', en:'Fan-in Queue · Animated', cat:'special', kind:'动画语义模式', purpose:'动态展示多个来源汇入有限容量队列，以及排队、吞吐和瓶颈。', question:'请求为什么堆积？队列容量和消费者速度怎样造成瓶颈？', example:'多个生产者写入任务队列，少量消费者处理导致积压。', related:['数据流图','Sankey','流程图'], single:true },
+      { id:'paved-road-animated', zh:'安全通道动画', en:'Secure Paved Road · Animated', cat:'special', kind:'动画语义模式', purpose:'展示跨信任边界的允许路径、禁止入口和标准化安全部署通道。', question:'哪些入口被允许？怎样沿标准安全路径完成部署或访问？', example:'开发制品通过签名、扫描和审批后进入生产环境。', related:['软件架构图','部署图','OAuth 时序图'], single:true },
+      { id:'tree-block-decomposition', zh:'可追踪块分解树', en:'Tree · Block Decomposition', cat:'special', kind:'语义模板', purpose:'把复杂模块逐层拆成可编号的块，并为每块标注输入、输出、约束和代码位置。', question:'一个复杂模块怎样拆解，同时保持需求、设计和实现之间可追踪？', example:'把推荐系统拆成召回、排序和策略块，并映射到接口与代码。', related:['树图','依赖图','UML 类图'] }
+    ];
+
+    const kindText = {
+      '基础图型': '独立的通用图型，有自己的布局语法和适用问题。',
+      '专用图型': '针对特定领域优化的图型，结构比通用架构图更固定。',
+      '子类型': '建立在一个基础图型之上的数据表达变体。',
+      '折线子类型': '属于折线图家族，但回答的问题和线条语义不同。',
+      '布局变体': '内容语义不变，主要改变阅读方向和画布适配。',
+      '战略图型': '用于战略判断，不只是描述现状。',
+      '专用模板': '某一基础图型在典型协议或场景中的完整模板。',
+      '导入示例': '展示技能如何重绘已有格式，不是一种新的业务图型。',
+      '视觉模板': '同一图型的特殊视觉语言，不改变核心语义。',
+      '动画语义模式': '用动画突出顺序、分歧或容量变化，静态帧仍保持完整含义。',
+      '语义模板': '在基础图型上增加固定的信息槽位和可追踪规则。'
+    };
+
+    let activeCategory = 'all';
+    let activeId = 'architecture';
+    let activeVariant = '';
+
+    const filters = document.getElementById('filters');
+    const list = document.getElementById('type-list');
+    const search = document.getElementById('search');
+    const preview = document.getElementById('preview');
+    const openLink = document.getElementById('open-link');
+    const count = document.getElementById('count');
+
+    function matches(entry, query) {
+      if (activeCategory !== 'all' && entry.cat !== activeCategory) return false;
+      if (!query) return true;
+      const haystack = [entry.zh, entry.en, entry.kind, entry.purpose, entry.question, entry.example, ...entry.related].join(' ').toLowerCase();
+      return haystack.includes(query.toLowerCase());
+    }
+
+    function renderFilters() {
+      filters.innerHTML = categories.map(([id, label]) =>
+        `<button class="filter ${id === activeCategory ? 'active' : ''}" data-category="${id}">${label}</button>`
+      ).join('');
+    }
+
+    function renderList() {
+      const query = search.value.trim();
+      const visible = entries.filter(entry => matches(entry, query));
+      count.textContent = `${visible.length} / ${entries.length} ENTRIES`;
+      if (!visible.length) {
+        list.innerHTML = '<div class="empty">没有匹配的图型</div>';
+        return;
+      }
+      if (!visible.some(entry => entry.id === activeId)) activeId = visible[0].id;
+      list.innerHTML = visible.map(entry => {
+        const index = String(entries.indexOf(entry) + 1).padStart(2, '0');
+        return `
+          <button class="type-item ${entry.id === activeId ? 'active' : ''}" data-id="${entry.id}" role="option" aria-selected="${entry.id === activeId}">
+            <span class="index">${index}</span>
+            <span class="type-copy"><span class="type-name">${entry.zh}</span><span class="type-en">${entry.en}</span></span>
+            <span class="kind">${entry.kind}</span>
+          </button>`;
+      }).join('');
+    }
+
+    function updateDetail() {
+      const entry = entries.find(item => item.id === activeId);
+      if (!entry) return;
+      document.getElementById('detail-code').textContent = `ENTRY ${String(entries.indexOf(entry) + 1).padStart(2, '0')} · ${entry.cat.toUpperCase()}`;
+      document.getElementById('detail-title').textContent = entry.zh;
+      document.getElementById('detail-en').textContent = entry.en;
+      document.getElementById('kind-banner').textContent = `${entry.kind}：${kindText[entry.kind]}`;
+      document.getElementById('detail-purpose').textContent = entry.purpose;
+      document.getElementById('detail-question').textContent = entry.question;
+      document.getElementById('detail-example').textContent = entry.example;
+      document.getElementById('detail-related').innerHTML = entry.related.map(item => `<span>${item}</span>`).join('');
+
+      if (entry.single) activeVariant = '';
+      document.querySelectorAll('.variant').forEach(button => {
+        button.disabled = Boolean(entry.single) && button.dataset.variant !== '';
+        button.classList.toggle('active', button.dataset.variant === activeVariant);
+      });
+      const src = `diagram-design/assets/example-${entry.id}${activeVariant}.html`;
+      preview.src = src;
+      preview.title = `${entry.zh}示例预览`;
+      openLink.href = src;
+    }
+
+    function renderAll() {
+      renderFilters();
+      renderList();
+      updateDetail();
+    }
+
+    filters.addEventListener('click', event => {
+      const button = event.target.closest('[data-category]');
+      if (!button) return;
+      activeCategory = button.dataset.category;
+      renderAll();
+    });
+
+    list.addEventListener('click', event => {
+      const button = event.target.closest('[data-id]');
+      if (!button) return;
+      activeId = button.dataset.id;
+      activeVariant = '';
+      renderList();
+      updateDetail();
+    });
+
+    document.getElementById('variants').addEventListener('click', event => {
+      const button = event.target.closest('[data-variant]');
+      if (!button || button.disabled) return;
+      activeVariant = button.dataset.variant;
+      updateDetail();
+    });
+
+    search.addEventListener('input', renderAll);
+    renderAll();
+  </script>
+</body>
+</html>
