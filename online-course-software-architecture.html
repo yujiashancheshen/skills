@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线课程平台软件架构</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Noto+Sans+SC:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --paper: #f6f8fb;
+      --ink: #172033;
+      --muted: #5b6577;
+      --soft: #8791a2;
+      --rule: #d9dee7;
+      --blue: #2563a6;
+      --accent: #d97732;
+      --sans: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --serif: 'Instrument Serif', 'Noto Serif SC', 'Songti SC', serif;
+      --mono: 'Geist Mono', 'Noto Sans Mono CJK SC', monospace;
+    }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+    main { width: min(100%, 1520px); margin: 0 auto; padding: 32px 40px 40px; }
+    .header { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 20px; }
+    .eyebrow { margin: 0 0 6px; color: var(--blue); font-family: var(--mono); font-size: 8px; letter-spacing: 0.14em; }
+    h1 { margin: 0; font-family: var(--serif); font-size: 36px; font-weight: 400; line-height: 1.1; }
+    .subtitle { max-width: 620px; margin: 0 0 2px; color: var(--muted); font-size: 14px; line-height: 1.6; text-align: right; }
+    .canvas { overflow-x: auto; background: #fff; border: 1px solid var(--rule); border-radius: 8px; }
+    svg { display: block; width: 100%; min-width: 1280px; height: auto; }
+    footer { margin-top: 12px; color: var(--soft); font-family: var(--mono); font-size: 8px; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="header">
+      <div>
+        <p class="eyebrow">SOFTWARE ARCHITECTURE · ONLINE LEARNING</p>
+        <h1>在线课程平台软件架构</h1>
+      </div>
+      <p class="subtitle">客户端经统一接入层访问领域服务，数据、缓存、消息与文件能力由平台基础设施集中承载。</p>
+    </header>
+
+    <div class="canvas">
+      <svg viewBox="0 0 1440 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="course-architecture-title course-architecture-desc">
+        <title id="course-architecture-title">在线课程平台软件架构</title>
+        <desc id="course-architecture-desc">在线课程平台的软件架构，展示客户端通过统一接入层访问课程教务、学习履约和订单支付服务，并连接平台基础设施、外部支付渠道和可观测平台。</desc>
+        <defs>
+          <marker id="course-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#5b6577"/></marker>
+          <marker id="course-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#d97732"/></marker>
+          <marker id="course-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2563a6"/></marker>
+        </defs>
+        <style>
+          .zone { fill: rgba(23,32,51,.018); stroke: rgba(23,32,51,.12); stroke-width: 1; }
+          .zone-mask { fill: #fff; }
+          .zone-label { fill: #8791a2; font: 500 8px 'Geist Mono',monospace; letter-spacing: .14em; text-anchor: middle; }
+          .node-mask { fill: #fff; }
+          .client { fill: #edf4fb; stroke: #7fa4cb; stroke-width: 1; }
+          .service { fill: #fff; stroke: #607087; stroke-width: 1; }
+          .focal { fill: #fff6ed; stroke: #d97732; stroke-width: 1.2; }
+          .store { fill: #f1f3f6; stroke: #748094; stroke-width: 1; }
+          .external { fill: #f7f8fa; stroke: #a6afbc; stroke-width: 1; }
+          .optional { fill: #fafbfc; stroke: #a6afbc; stroke-width: 1; stroke-dasharray: 4,3; }
+          .tag { fill: none; stroke-width: .8; }
+          .tag-text { font: 500 8px 'Geist Mono',monospace; letter-spacing: .08em; text-anchor: middle; }
+          .node-title { fill: #172033; font: 600 16px 'Geist','Noto Sans SC',sans-serif; text-anchor: middle; }
+          .node-sub { fill: #5b6577; font: 400 12px 'Geist Mono','Noto Sans SC',monospace; text-anchor: middle; }
+          .infra-name { fill: #172033; font: 600 12px 'Geist','Noto Sans SC',sans-serif; text-anchor: middle; }
+          .infra-sub { fill: #8791a2; font: 400 8px 'Geist Mono',monospace; text-anchor: middle; }
+          .arrow-label { font: 500 8px 'Geist Mono',monospace; letter-spacing: .08em; text-anchor: middle; }
+        </style>
+        <rect width="1440" height="800" fill="#fff"/>
+
+        <!-- Zones -->
+        <rect class="zone" x="40" y="24" width="1360" height="152" rx="8"/>
+        <rect class="zone-mask" x="640" y="28" width="160" height="16" rx="2"/><text class="zone-label" x="720" y="40">CLIENT CHANNELS</text>
+        <rect class="zone" x="40" y="192" width="1360" height="320" rx="8"/>
+        <rect class="zone-mask" x="632" y="196" width="176" height="16" rx="2"/><text class="zone-label" x="720" y="208">APPLICATION CORE</text>
+        <rect class="zone" x="40" y="528" width="1360" height="160" rx="8"/>
+        <rect class="zone-mask" x="620" y="532" width="200" height="16" rx="2"/><text class="zone-label" x="720" y="544">PLATFORM FOUNDATION</text>
+
+        <!-- Connectors: clients to access layer -->
+        <path d="M440 152 V176 Q440 184 448 184 H652 Q660 184 660 192 V232" fill="none" stroke="#2563a6" stroke-width="1.2" marker-end="url(#course-arrow-link)"/>
+        <path d="M1000 152 V176 Q1000 184 992 184 H748 Q740 184 740 192 V232" fill="none" stroke="#2563a6" stroke-width="1.2" marker-end="url(#course-arrow-link)"/>
+        <rect x="516" y="160" width="48" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="540" y="169" fill="#2563a6">HTTPS</text>
+        <rect x="876" y="160" width="48" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="900" y="169" fill="#2563a6">HTTPS</text>
+
+        <!-- Connectors: access layer to domain services -->
+        <path d="M640 312 V328 Q640 336 632 336 H328 Q320 336 320 344 V392" fill="none" stroke="#d97732" stroke-width="1.2" marker-end="url(#course-arrow-accent)"/>
+        <path d="M680 312 V344 Q680 352 672 352 H648 Q640 352 640 360 V392" fill="none" stroke="#5b6577" stroke-width="1.2" marker-end="url(#course-arrow)"/>
+        <path d="M720 312 V360 Q720 368 728 368 H952 Q960 368 960 376 V392" fill="none" stroke="#5b6577" stroke-width="1.2" marker-end="url(#course-arrow)"/>
+        <rect x="432" y="312" width="72" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="468" y="321" fill="#d97732">COURSE API</text>
+        <rect x="612" y="328" width="56" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="640" y="337" fill="#5b6577">LEARN API</text>
+        <rect x="824" y="344" width="64" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="856" y="353" fill="#5b6577">ORDER API</text>
+
+        <!-- Connectors: services to shared foundation -->
+        <line x1="320" y1="480" x2="320" y2="568" stroke="#5b6577" stroke-width="1.2" marker-end="url(#course-arrow)"/>
+        <line x1="640" y1="480" x2="640" y2="568" stroke="#5b6577" stroke-width="1.2" marker-end="url(#course-arrow)"/>
+        <line x1="960" y1="480" x2="960" y2="568" stroke="#5b6577" stroke-width="1.2" marker-end="url(#course-arrow)"/>
+        <rect x="328" y="516" width="48" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="352" y="525" fill="#5b6577">PERSIST</text>
+        <rect x="648" y="516" width="72" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="684" y="525" fill="#5b6577">CACHE / EVENT</text>
+        <rect x="968" y="516" width="48" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="992" y="525" fill="#5b6577">PERSIST</text>
+
+        <!-- External payment and observability -->
+        <line x1="1080" y1="424" x2="1160" y2="424" stroke="#2563a6" stroke-width="1.2" marker-end="url(#course-arrow-link)"/>
+        <line x1="1160" y1="456" x2="1080" y2="456" stroke="#5b6577" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#course-arrow)"/>
+        <rect x="1092" y="400" width="56" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="1120" y="409" fill="#2563a6">PAYMENT</text>
+        <rect x="1096" y="464" width="48" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="1120" y="473" fill="#5b6577">RESULT</text>
+        <line x1="1120" y1="612" x2="1160" y2="612" stroke="#5b6577" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#course-arrow)"/>
+        <rect x="1124" y="588" width="32" height="12" rx="2" fill="#fff"/><text class="arrow-label" x="1140" y="597" fill="#5b6577">OTEL</text>
+
+        <!-- Client nodes -->
+        <g>
+          <rect class="node-mask" x="320" y="64" width="240" height="88" rx="6"/><rect class="client" x="320" y="64" width="240" height="88" rx="6"/>
+          <rect class="tag" x="332" y="76" width="48" height="16" rx="2" stroke="#7fa4cb"/><text class="tag-text" x="356" y="88" fill="#2563a6">WEB</text>
+          <text class="node-title" x="440" y="112">运营管理端</text><text class="node-sub" x="440" y="136">课程配置 · 教务运营</text>
+        </g>
+        <g>
+          <rect class="node-mask" x="880" y="64" width="240" height="88" rx="6"/><rect class="client" x="880" y="64" width="240" height="88" rx="6"/>
+          <rect class="tag" x="892" y="76" width="48" height="16" rx="2" stroke="#7fa4cb"/><text class="tag-text" x="916" y="88" fill="#2563a6">APP</text>
+          <text class="node-title" x="1000" y="112">家长 / 学生端</text><text class="node-sub" x="1000" y="136">选课 · 学习 · 课后服务</text>
+        </g>
+
+        <!-- Access layer -->
+        <g>
+          <rect class="node-mask" x="600" y="232" width="240" height="80" rx="6"/><rect class="focal" x="600" y="232" width="240" height="80" rx="6"/>
+          <rect class="tag" x="612" y="244" width="64" height="16" rx="2" stroke="#d97732"/><text class="tag-text" x="644" y="256" fill="#d97732">EDGE</text>
+          <text class="node-title" x="720" y="276">统一接入层</text><text class="node-sub" x="720" y="300">API Gateway · IAM · 限流</text>
+        </g>
+
+        <!-- Domain services -->
+        <g>
+          <rect class="node-mask" x="200" y="392" width="240" height="88" rx="6"/><rect class="service" x="200" y="392" width="240" height="88" rx="6"/>
+          <rect class="tag" x="212" y="404" width="72" height="16" rx="2" stroke="#607087"/><text class="tag-text" x="248" y="416" fill="#607087">DOMAIN</text>
+          <text class="node-title" x="320" y="444">课程与教务服务</text><text class="node-sub" x="320" y="468">课程 · 班级 · 排课</text>
+        </g>
+        <g>
+          <rect class="node-mask" x="520" y="392" width="240" height="88" rx="6"/><rect class="service" x="520" y="392" width="240" height="88" rx="6"/>
+          <rect class="tag" x="532" y="404" width="72" height="16" rx="2" stroke="#607087"/><text class="tag-text" x="568" y="416" fill="#607087">DOMAIN</text>
+          <text class="node-title" x="640" y="444">学习与履约服务</text><text class="node-sub" x="640" y="468">课堂 · 出勤 · 学习报告</text>
+        </g>
+        <g>
+          <rect class="node-mask" x="840" y="392" width="240" height="88" rx="6"/><rect class="service" x="840" y="392" width="240" height="88" rx="6"/>
+          <rect class="tag" x="852" y="404" width="72" height="16" rx="2" stroke="#607087"/><text class="tag-text" x="888" y="416" fill="#607087">DOMAIN</text>
+          <text class="node-title" x="960" y="444">订单与支付服务</text><text class="node-sub" x="960" y="468">订单 · 优惠 · 退款</text>
+        </g>
+        <g>
+          <rect class="node-mask" x="1160" y="392" width="160" height="88" rx="6"/><rect class="external" x="1160" y="392" width="160" height="88" rx="6"/>
+          <rect class="tag" x="1172" y="404" width="64" height="16" rx="2" stroke="#a6afbc"/><text class="tag-text" x="1204" y="416" fill="#8791a2">EXTERNAL</text>
+          <text class="node-title" x="1240" y="444">支付渠道</text><text class="node-sub" x="1240" y="468">微信 · 支付宝</text>
+        </g>
+
+        <!-- Shared foundation -->
+        <g>
+          <rect class="node-mask" x="200" y="568" width="920" height="88" rx="6"/><rect class="store" x="200" y="568" width="920" height="88" rx="6"/>
+          <rect class="tag" x="212" y="580" width="88" height="16" rx="2" stroke="#748094"/><text class="tag-text" x="256" y="592" fill="#748094">DATA PLANE</text>
+          <text x="328" y="592" fill="#172033" font-size="16" font-weight="600" font-family="'Geist','Noto Sans SC',sans-serif">数据与异步基础设施</text>
+          <line x1="440" y1="608" x2="440" y2="644" stroke="#c6cdd7"/><line x1="648" y1="608" x2="648" y2="644" stroke="#c6cdd7"/><line x1="856" y1="608" x2="856" y2="644" stroke="#c6cdd7"/>
+          <text class="infra-name" x="336" y="628">MySQL</text><text class="infra-sub" x="336" y="644">TRANSACTION</text>
+          <text class="infra-name" x="544" y="628">Redis</text><text class="infra-sub" x="544" y="644">CACHE</text>
+          <text class="infra-name" x="752" y="628">Message Queue</text><text class="infra-sub" x="752" y="644">ASYNC EVENT</text>
+          <text class="infra-name" x="960" y="628">Object Storage</text><text class="infra-sub" x="960" y="644">MEDIA · COURSEWARE</text>
+        </g>
+        <g>
+          <rect class="node-mask" x="1160" y="568" width="160" height="88" rx="6"/><rect class="optional" x="1160" y="568" width="160" height="88" rx="6"/>
+          <rect class="tag" x="1172" y="580" width="72" height="16" rx="2" stroke="#a6afbc"/><text class="tag-text" x="1208" y="592" fill="#8791a2">PLATFORM</text>
+          <text class="node-title" x="1240" y="620">可观测平台</text><text class="node-sub" x="1240" y="644">Logs · Metrics · Traces</text>
+        </g>
+
+        <!-- Legend -->
+        <line x1="40" y1="716" x2="1400" y2="716" stroke="#d9dee7"/>
+        <text x="40" y="748" fill="#8791a2" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".14em">LEGEND</text>
+        <rect x="136" y="736" width="20" height="16" rx="2" fill="#edf4fb" stroke="#7fa4cb"/><text x="168" y="748" fill="#5b6577" font-size="12" font-family="'Geist','Noto Sans SC',sans-serif">客户端</text>
+        <rect x="264" y="736" width="20" height="16" rx="2" fill="#fff6ed" stroke="#d97732"/><text x="296" y="748" fill="#5b6577" font-size="12" font-family="'Geist','Noto Sans SC',sans-serif">核心接入</text>
+        <rect x="408" y="736" width="20" height="16" rx="2" fill="#fff" stroke="#607087"/><text x="440" y="748" fill="#5b6577" font-size="12" font-family="'Geist','Noto Sans SC',sans-serif">领域服务</text>
+        <rect x="552" y="736" width="20" height="16" rx="2" fill="#f1f3f6" stroke="#748094"/><text x="584" y="748" fill="#5b6577" font-size="12" font-family="'Geist','Noto Sans SC',sans-serif">数据设施</text>
+        <line x1="712" y1="744" x2="752" y2="744" stroke="#2563a6" stroke-width="1.2" marker-end="url(#course-arrow-link)"/><text x="768" y="748" fill="#5b6577" font-size="12" font-family="'Geist','Noto Sans SC',sans-serif">同步请求</text>
+        <line x1="888" y1="744" x2="928" y2="744" stroke="#5b6577" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#course-arrow)"/><text x="944" y="748" fill="#5b6577" font-size="12" font-family="'Geist','Noto Sans SC',sans-serif">返回 / 遥测</text>
+      </svg>
+    </div>
+    <footer>ARCHITECTURE · SLIDE 16:9 · BALANCED · MIXED AUDIENCE</footer>
+  </main>
+</body>
+</html>

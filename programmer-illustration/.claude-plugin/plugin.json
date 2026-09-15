@@ -1,0 +1,16 @@
+{
+  "name": "programmer-illustration",
+  "version": "1.0.0",
+  "description": "把技术内容变成专业好看的配图。支持科技插画、等距立体、暗色科技、数据卡片、手绘涂鸦五种风格模板。",
+  "author": {
+    "name": "yujiashancheshen"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "illustration",
+    "infographic",
+    "tech-art",
+    "image-generation",
+    "技术配图"
+  ]
+}

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商业化智能体产品技术架构</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --paper: #f4f6fb;
+      --ink: #2a2f45;
+      --muted: #5a6275;
+      --soft: #8790a3;
+      --blue: #5b8def;
+      --blue-tint: #eaf0fe;
+      --teal: #4fc3c3;
+      --teal-tint: #e8f7f7;
+      --purple: #9b8cff;
+      --purple-tint: #f0efff;
+      --orange: #ff9e64;
+      --orange-tint: #fff1e8;
+      --line: #d6dcea;
+      --white: #ffffff;
+      --sans: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --serif: 'Instrument Serif', 'Noto Serif SC', serif;
+      --mono: 'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 40px 48px 56px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+    }
+    .frame { max-width: 1600px; margin: 0 auto; }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font: 500 12px/1 var(--mono);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font: 400 36px/1.08 var(--serif);
+    }
+    .subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font: 16px/1.5 var(--sans);
+    }
+    .diagram-scroll { width: 100%; overflow-x: auto; }
+    svg { display: block; width: 100%; min-width: 1200px; height: auto; }
+    .note {
+      margin: 16px 0 0;
+      padding-top: 14px;
+      border-top: 1px solid rgba(42,47,69,.14);
+      color: var(--muted);
+      font: 12px/1.6 var(--sans);
+    }
+    .note strong { color: var(--ink); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <p class="eyebrow">ARCHITECTURE · COMMERCIAL AGENT PLATFORM</p>
+    <h1>商业化智能体产品技术架构</h1>
+    <p class="subtitle">把用户目标转成可确认、可执行、可回滚、可计量的交付结果</p>
+
+    <div class="diagram-scroll">
+    <svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="commercial-agent-architecture-title commercial-agent-architecture-desc">
+      <title id="commercial-agent-architecture-title">商业化智能体产品技术架构</title>
+      <desc id="commercial-agent-architecture-desc">展示从用户会话进入智能体编排，经受控工具和隔离执行环境生成版本化产物，并由模型网关、计量、审计与发布确认共同治理的技术架构。</desc>
+      <defs>
+        <marker id="commercial-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#5a6275"/>
+        </marker>
+        <marker id="commercial-arrow-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#5b8def"/>
+        </marker>
+        <marker id="commercial-arrow-teal" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#4fc3c3"/>
+        </marker>
+      </defs>
+
+      <rect width="1600" height="900" fill="#f4f6fb"/>
+
+      <!-- Three architectural zones. -->
+      <rect x="32" y="168" width="512" height="340" rx="8" fill="#ffffff" fill-opacity=".46" stroke="#d6dcea" stroke-width="1"/>
+      <rect x="568" y="168" width="640" height="340" rx="8" fill="#eaf0fe" fill-opacity=".38" stroke="#cfd9f4" stroke-width="1"/>
+      <rect x="1248" y="168" width="320" height="548" rx="8" fill="#f0efff" fill-opacity=".42" stroke="#dad6fb" stroke-width="1"/>
+
+      <!-- Zone labels. -->
+      <rect x="52" y="172" width="148" height="20" rx="4" fill="#f4f6fb"/>
+      <text x="124" y="188" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="12" letter-spacing=".12em">EXPERIENCE PLANE</text>
+      <rect x="568" y="172" width="132" height="20" rx="4" fill="#f4f6fb"/>
+      <text x="632" y="188" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="12" letter-spacing=".12em">CONTROL PLANE</text>
+      <rect x="1268" y="172" width="144" height="20" rx="4" fill="#f4f6fb"/>
+      <text x="1340" y="188" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="12" letter-spacing=".12em">EXECUTION PLANE</text>
+
+      <!-- Primary and secondary connectors, drawn before nodes. -->
+      <path d="M232 356 H280" fill="none" stroke="#5b8def" stroke-width="2" marker-end="url(#commercial-arrow-blue)"/>
+      <rect x="236" y="332" width="40" height="16" rx="3" fill="#f4f6fb"/>
+      <text x="256" y="344" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">INPUT</text>
+
+      <path d="M520 338 H584" fill="none" stroke="#5b8def" stroke-width="2" marker-end="url(#commercial-arrow-blue)"/>
+      <rect x="528" y="316" width="48" height="16" rx="3" fill="#f4f6fb"/>
+      <text x="552" y="328" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">INTENT</text>
+
+      <path d="M872 304 H892 Q900 304 900 296 V248 Q900 240 908 240 H924" fill="none" stroke="#4fc3c3" stroke-width="1.6" marker-end="url(#commercial-arrow-teal)"/>
+
+      <path d="M872 356 H924" fill="none" stroke="#5b8def" stroke-width="2" marker-end="url(#commercial-arrow-blue)"/>
+      <rect x="876" y="332" width="48" height="16" rx="3" fill="#f4f6fb"/>
+      <text x="900" y="344" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">TOOLS</text>
+
+      <path d="M1164 356 H1276" fill="none" stroke="#5b8def" stroke-width="2" marker-end="url(#commercial-arrow-blue)"/>
+      <rect x="1184" y="332" width="60" height="16" rx="3" fill="#f4f6fb"/>
+      <text x="1212" y="344" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">DISPATCH</text>
+
+      <path d="M1404 412 V484" fill="none" stroke="#9b8cff" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#commercial-arrow)"/>
+      <rect x="1412" y="436" width="56" height="16" rx="3" fill="#f4f6fb"/>
+      <text x="1440" y="448" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">WRITE</text>
+
+      <path d="M736 440 V668" fill="none" stroke="#ff9e64" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#commercial-arrow)"/>
+      <rect x="744" y="536" width="56" height="16" rx="3" fill="#f4f6fb"/>
+      <text x="772" y="548" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">USAGE</text>
+
+      <path d="M1036 484 V668" fill="none" stroke="#5a6275" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#commercial-arrow)"/>
+      <rect x="1044" y="536" width="56" height="16" rx="3" fill="#f4f6fb"/>
+      <text x="1072" y="548" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">AUDIT</text>
+
+      <!-- Delivery return path stays below the governance band. -->
+      <path d="M1404 616 V800 H168 Q160 800 160 792 V432" fill="none" stroke="#5a6275" stroke-width="1.2" stroke-dasharray="6 4" marker-end="url(#commercial-arrow)"/>
+      <rect x="700" y="776" width="84" height="16" rx="3" fill="#f4f6fb"/>
+      <text x="740" y="788" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">PREVIEW / PUBLISH</text>
+
+      <!-- Client. -->
+      <rect x="72" y="280" width="160" height="152" rx="6" fill="#ffffff" stroke="#8790a3" stroke-width="1"/>
+      <rect x="84" y="292" width="48" height="20" rx="4" fill="#e8eefb" stroke="#9db5ef" stroke-width="1"/>
+      <text x="108" y="308" text-anchor="middle" fill="#5b73ac" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".08em">ACTOR</text>
+      <text x="152" y="340" text-anchor="middle" fill="#2a2f45" font-family="'Noto Sans SC', sans-serif" font-size="16" font-weight="600">用户 / 管理员</text>
+      <text x="152" y="368" text-anchor="middle" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">确认 · 预览 · 发布</text>
+      <text x="152" y="396" text-anchor="middle" fill="#8790a3" font-family="'Geist Mono', monospace" font-size="8">web / api / console</text>
+
+      <!-- Session and task state. -->
+      <rect x="280" y="256" width="240" height="164" rx="6" fill="#ffffff" stroke="#2a2f45" stroke-width="1.2"/>
+      <rect x="292" y="268" width="56" height="20" rx="4" fill="#eaf0fe" stroke="#5b8def" stroke-width="1"/>
+      <text x="320" y="284" text-anchor="middle" fill="#3d65b5" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".08em">STATE</text>
+      <text x="400" y="308" text-anchor="middle" fill="#2a2f45" font-family="'Noto Sans SC', sans-serif" font-size="16" font-weight="600">会话与任务 API</text>
+      <text x="400" y="332" text-anchor="middle" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">流式回复 · 卡片交互 · 中断恢复</text>
+      <line x1="300" y1="348" x2="500" y2="348" stroke="#d6dcea" stroke-width="1"/>
+      <text x="304" y="372" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">task_state</text>
+      <text x="304" y="392" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">structured_request · confirmations</text>
+      <text x="304" y="412" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">artifact_version · session_history</text>
+
+      <!-- Orchestrator focal node. -->
+      <rect x="584" y="244" width="288" height="196" rx="6" fill="#eaf0fe" stroke="#5b8def" stroke-width="1.6"/>
+      <rect x="596" y="256" width="72" height="20" rx="4" fill="#5b8def"/>
+      <text x="632" y="272" text-anchor="middle" fill="#ffffff" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".08em">CONTROL</text>
+      <text x="728" y="296" text-anchor="middle" fill="#2a2f45" font-family="'Noto Sans SC', sans-serif" font-size="16" font-weight="600">智能体编排器</text>
+      <text x="728" y="316" text-anchor="middle" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">计划 · 工具选择 · 确认 · 重试</text>
+      <rect x="604" y="336" width="112" height="28" rx="4" fill="#ffffff" stroke="#a8bdf2" stroke-width="1"/>
+      <rect x="728" y="336" width="112" height="28" rx="4" fill="#ffffff" stroke="#a8bdf2" stroke-width="1"/>
+      <rect x="604" y="376" width="112" height="28" rx="4" fill="#ffffff" stroke="#a8bdf2" stroke-width="1"/>
+      <text x="660" y="356" text-anchor="middle" fill="#3d65b5" font-family="'Noto Sans SC', sans-serif" font-size="12">需求智能体</text>
+      <text x="784" y="356" text-anchor="middle" fill="#3d65b5" font-family="'Noto Sans SC', sans-serif" font-size="12">执行智能体</text>
+      <text x="660" y="396" text-anchor="middle" fill="#3d65b5" font-family="'Noto Sans SC', sans-serif" font-size="12">验证智能体</text>
+      <text x="784" y="396" text-anchor="middle" fill="#8790a3" font-family="'Geist Mono', monospace" font-size="8">budget / timeout / rollback</text>
+
+      <!-- Model gateway. -->
+      <rect x="924" y="208" width="240" height="132" rx="6" fill="#e8f7f7" stroke="#4fc3c3" stroke-width="1.2"/>
+      <rect x="936" y="220" width="52" height="20" rx="4" fill="#d2f0f0" stroke="#4fc3c3" stroke-width="1"/>
+      <text x="960" y="232" text-anchor="middle" fill="#317f80" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".08em">MODEL</text>
+      <text x="1044" y="264" text-anchor="middle" fill="#2a2f45" font-family="'Noto Sans SC', sans-serif" font-size="16" font-weight="600">模型网关</text>
+      <text x="1044" y="288" text-anchor="middle" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">路由 · 限流 · Token 预算</text>
+      <text x="1044" y="316" text-anchor="middle" fill="#8790a3" font-family="'Geist Mono', monospace" font-size="8">provider adapters / JSON schema</text>
+
+      <!-- Tool gateway. -->
+      <rect x="924" y="352" width="240" height="132" rx="6" fill="#ffffff" stroke="#5b8def" stroke-width="1.2"/>
+      <rect x="936" y="368" width="52" height="20" rx="4" fill="#eaf0fe" stroke="#8faef0" stroke-width="1"/>
+      <text x="960" y="380" text-anchor="middle" fill="#3d65b5" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".08em">TOOLS</text>
+      <text x="1044" y="412" text-anchor="middle" fill="#2a2f45" font-family="'Noto Sans SC', sans-serif" font-size="16" font-weight="600">结果型工具网关</text>
+      <text x="1044" y="436" text-anchor="middle" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">建站 · 内容 · 素材 · 表单 · 发布</text>
+      <text x="1044" y="464" text-anchor="middle" fill="#8790a3" font-family="'Geist Mono', monospace" font-size="8">allowlist / approval hooks / schemas</text>
+
+      <!-- Runtime. -->
+      <rect x="1276" y="248" width="256" height="164" rx="6" fill="#f0efff" stroke="#9b8cff" stroke-width="1.2"/>
+      <rect x="1288" y="260" width="64" height="20" rx="4" fill="#e1ddff" stroke="#9b8cff" stroke-width="1"/>
+      <text x="1320" y="276" text-anchor="middle" fill="#6558bf" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".08em">RUNTIME</text>
+      <text x="1404" y="308" text-anchor="middle" fill="#2a2f45" font-family="'Noto Sans SC', sans-serif" font-size="16" font-weight="600">隔离工作区</text>
+      <text x="1404" y="332" text-anchor="middle" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">容器 · 浏览器 · 构建 · 测试</text>
+      <line x1="1296" y1="348" x2="1512" y2="348" stroke="#d6dcea" stroke-width="1"/>
+      <text x="1300" y="372" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">job_queue / retry_policy</text>
+      <text x="1300" y="392" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8">browser_preview / deploy_runner</text>
+
+      <!-- Artifact registry. -->
+      <rect x="1276" y="484" width="256" height="132" rx="6" fill="#f0efff" stroke="#9b8cff" stroke-width="1.2"/>
+      <rect x="1288" y="496" width="56" height="20" rx="4" fill="#e1ddff" stroke="#9b8cff" stroke-width="1"/>
+      <text x="1316" y="512" text-anchor="middle" fill="#6558bf" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".08em">STORE</text>
+      <text x="1404" y="544" text-anchor="middle" fill="#2a2f45" font-family="'Noto Sans SC', sans-serif" font-size="16" font-weight="600">产物与版本仓</text>
+      <text x="1404" y="568" text-anchor="middle" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">快照 · 差异 · 回滚 · 导出</text>
+      <text x="1404" y="596" text-anchor="middle" fill="#8790a3" font-family="'Geist Mono', monospace" font-size="8">artifact_id / version / release_status</text>
+
+      <!-- Governance nodes, outside the three main planes. -->
+      <line x1="548" y1="636" x2="1568" y2="636" stroke="#d6dcea" stroke-width="1"/>
+      <text x="548" y="624" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="12" letter-spacing=".12em">CROSS-CUTTING GOVERNANCE</text>
+
+      <rect x="584" y="668" width="280" height="84" rx="6" fill="#fff1e8" stroke="#ff9e64" stroke-width="1.2"/>
+      <rect x="596" y="680" width="56" height="20" rx="4" fill="#ffe0cb" stroke="#ff9e64" stroke-width="1"/>
+      <text x="624" y="696" text-anchor="middle" fill="#b56637" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".08em">METER</text>
+      <text x="724" y="712" text-anchor="middle" fill="#2a2f45" font-family="'Noto Sans SC', sans-serif" font-size="16" font-weight="600">计量与商业化</text>
+      <text x="724" y="736" text-anchor="middle" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">项目 / 交付物 / 点数 / 订阅</text>
+
+      <rect x="900" y="668" width="280" height="84" rx="6" fill="#ffffff" stroke="#5a6275" stroke-width="1.2" stroke-dasharray="6 4"/>
+      <rect x="912" y="680" width="56" height="20" rx="4" fill="#eef1f8" stroke="#8790a3" stroke-width="1"/>
+      <text x="940" y="696" text-anchor="middle" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".08em">GUARD</text>
+      <text x="1040" y="712" text-anchor="middle" fill="#2a2f45" font-family="'Noto Sans SC', sans-serif" font-size="16" font-weight="600">安全与审计</text>
+      <text x="1040" y="736" text-anchor="middle" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">租户隔离 · 密钥托管 · 发布审批 · 回滚</text>
+
+      <!-- Bottom legend strip. -->
+      <line x1="32" y1="836" x2="1568" y2="836" stroke="#d6dcea" stroke-width="1"/>
+      <text x="32" y="860" fill="#5a6275" font-family="'Geist Mono', monospace" font-size="8" letter-spacing=".12em">LEGEND</text>
+      <line x1="132" y1="856" x2="164" y2="856" stroke="#5b8def" stroke-width="2" marker-end="url(#commercial-arrow-blue)"/>
+      <text x="176" y="860" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">同步调用 / 主路径</text>
+      <line x1="348" y1="856" x2="380" y2="856" stroke="#5a6275" stroke-width="1.2" stroke-dasharray="6 4" marker-end="url(#commercial-arrow)"/>
+      <text x="392" y="860" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">异步事件 / 产物回传</text>
+      <rect x="612" y="848" width="20" height="16" rx="4" fill="#eaf0fe" stroke="#5b8def" stroke-width="1"/>
+      <text x="644" y="860" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">控制面</text>
+      <rect x="744" y="848" width="20" height="16" rx="4" fill="#f0efff" stroke="#9b8cff" stroke-width="1"/>
+      <text x="776" y="860" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">执行与存储</text>
+      <rect x="900" y="848" width="20" height="16" rx="4" fill="#fff1e8" stroke="#ff9e64" stroke-width="1"/>
+      <text x="932" y="860" fill="#5a6275" font-family="'Noto Sans SC', sans-serif" font-size="12">价值计量</text>
+      <text x="1568" y="860" text-anchor="end" fill="#8790a3" font-family="'Geist Mono', monospace" font-size="8">v1 · technical reference architecture</text>
+    </svg>
+    </div>
+
+    <p class="note"><strong>阅读重点：</strong>编排器负责把目标变成受控计划；工具网关只暴露可评估的结果型能力；工作区负责稳定执行和产物版本；安全与计量从旁路接入每次工具调用、资源消耗和外部发布。</p>
+  </main>
+</body>
+</html>

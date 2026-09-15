@@ -45,10 +45,6 @@ Default output path:
 
 `<draft_stem>_美化版_可编辑文字.pptx`
 
-If a font-size polish pass is performed:
-
-`<draft_stem>_美化版_可编辑文字_字体优化.pptx`
-
 Never overwrite the draft or reference PPTX unless the user explicitly asks.
 
 ## High-Level Procedure

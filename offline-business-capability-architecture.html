@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>线下业务能力架构</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@500&amp;family=Noto+Sans+SC:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --paper: #f6f8fb;
+      --ink: #172033;
+      --muted: #5b6577;
+      --soft: #8791a2;
+      --rule: #d9dee7;
+      --blue: #2563a6;
+      --sans: 'Geist', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --serif: 'Instrument Serif', 'Noto Serif SC', 'Songti SC', serif;
+      --mono: 'Geist Mono', 'Noto Sans Mono CJK SC', monospace;
+    }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+    main { width: min(100%, 1520px); margin: 0 auto; padding: 32px 40px 40px; }
+    .header { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 20px; }
+    .eyebrow { margin: 0 0 6px; color: var(--blue); font-family: var(--mono); font-size: 8px; letter-spacing: 0.14em; }
+    h1 { margin: 0; font-family: var(--serif); font-size: 36px; font-weight: 400; line-height: 1.1; }
+    .subtitle { max-width: 680px; margin: 0 0 2px; color: var(--muted); font-size: 14px; line-height: 1.6; text-align: right; }
+    .canvas { overflow-x: auto; background: #fff; border: 1px solid var(--rule); border-radius: 8px; }
+    svg { display: block; width: 100%; min-width: 1280px; height: auto; }
+    footer { margin-top: 12px; color: var(--soft); font-family: var(--mono); font-size: 8px; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="header">
+      <div>
+        <p class="eyebrow">OFFLINE BUSINESS · CAPABILITY MAP</p>
+        <h1>线下业务能力架构</h1>
+      </div>
+      <p class="subtitle">从业务应用到集团底座的四层能力地图。域内条目沿用原图口径，层间位置表达能力承载关系。</p>
+    </header>
+
+    <div class="canvas">
+      <svg viewBox="0 0 1440 872" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="offline-capability-map-title offline-capability-map-desc">
+        <title id="offline-capability-map-title">线下业务能力架构</title>
+        <desc id="offline-capability-map-desc">分层能力地图，展示线下业务应用、线下业务能力、直播课能力和集团基础能力包含的系统、业务域与功能。</desc>
+        <style>
+          .row { fill: #fbfcfe; stroke: #e2e7ee; stroke-width: 1; }
+          .row-alt { fill: #fff; stroke: #e2e7ee; stroke-width: 1; }
+          .rail { fill: #edf4fb; }
+          .layer-rule { fill: #2563a6; }
+          .layer-code { fill: #2563a6; font: 500 8px 'Geist Mono', monospace; letter-spacing: .12em; }
+          .layer-name { fill: #172033; font: 600 16px 'Geist','Noto Sans SC',sans-serif; }
+          .layer-note { fill: #8791a2; font: 400 12px 'Geist','Noto Sans SC',sans-serif; }
+          .system-card { fill: #fff; stroke: #b9c9dc; stroke-width: 1; }
+          .domain-card { fill: #f4f7fb; stroke: #d4dde8; stroke-width: 1; }
+          .platform-card { fill: #fff; stroke: #c7d2df; stroke-width: 1; }
+          .foundation-card { fill: #f1f3f6; stroke: #d4dae3; stroke-width: 1; }
+          .focal { fill: #fff8f1; stroke: #d97732; stroke-width: 1.2; }
+          .blue-rule { fill: #2563a6; }
+          .orange-rule { fill: #d97732; }
+          .node-title { fill: #172033; font: 600 16px 'Geist','Noto Sans SC',sans-serif; }
+          .focal-title { fill: #b65d22; font: 600 16px 'Geist','Noto Sans SC',sans-serif; }
+          .item { fill: #5b6577; font: 400 12px 'Geist','Noto Sans SC',sans-serif; }
+          .dot { fill: #a7b2c1; }
+          .dot-blue { fill: #6f9ac7; }
+          .dot-orange { fill: #d97732; }
+          .type { fill: #8791a2; font: 500 8px 'Geist Mono',monospace; letter-spacing: .08em; text-anchor: end; }
+        </style>
+
+        <rect width="1440" height="872" fill="#fff"/>
+
+        <!-- L1: applications -->
+        <rect class="row" x="24" y="24" width="1392" height="152" rx="8"/>
+        <rect class="rail" x="24" y="24" width="168" height="152" rx="8"/>
+        <rect class="layer-rule" x="24" y="24" width="4" height="152"/>
+        <text class="layer-code" x="52" y="56">L1 · APPLICATION</text>
+        <text class="layer-name" x="52" y="88">线下业务</text>
+        <text class="layer-name" x="52" y="112">应用层</text>
+        <text class="layer-note" x="52" y="144">面向业务角色的触点</text>
+
+        <g>
+          <rect class="system-card" x="216" y="40" width="200" height="120" rx="6"/><rect class="blue-rule" x="216" y="40" width="200" height="4" rx="2"/>
+          <text class="node-title" x="232" y="68">CRM</text><text class="type" x="400" y="68">SYSTEM</text>
+          <circle class="dot-blue" cx="236" cy="92" r="2"/><text class="item" x="248" y="96">例子任务</text><circle class="dot" cx="324" cy="92" r="2"/><text class="item" x="336" y="96">加微</text>
+          <circle class="dot" cx="236" cy="120" r="2"/><text class="item" x="248" y="124">外呼</text><circle class="dot" cx="324" cy="120" r="2"/><text class="item" x="336" y="124">售卖链路</text>
+        </g>
+        <g>
+          <rect class="system-card" x="432" y="40" width="272" height="120" rx="6"/><rect class="blue-rule" x="432" y="40" width="272" height="4" rx="2"/>
+          <text class="node-title" x="448" y="68">门店系统</text><text class="type" x="688" y="68">SYSTEM</text>
+          <circle class="dot-blue" cx="452" cy="92" r="2"/><text class="item" x="464" y="96">学员管理</text><circle class="dot" cx="564" cy="92" r="2"/><text class="item" x="576" y="96">收费管理</text>
+          <circle class="dot" cx="452" cy="120" r="2"/><text class="item" x="464" y="124">班级管理</text><circle class="dot" cx="564" cy="120" r="2"/><text class="item" x="576" y="124">转化 / 续班</text>
+          <circle class="dot" cx="452" cy="144" r="2"/><text class="item" x="464" y="148">订单管理</text><circle class="dot" cx="564" cy="144" r="2"/><text class="item" x="576" y="148">转退调</text>
+        </g>
+        <g>
+          <rect class="system-card" x="720" y="40" width="200" height="120" rx="6"/><rect class="blue-rule" x="720" y="40" width="200" height="4" rx="2"/>
+          <text class="node-title" x="736" y="68">主讲工作台</text><text class="type" x="904" y="68">SYSTEM</text>
+          <circle class="dot-blue" cx="740" cy="96" r="2"/><text class="item" x="752" y="100">班级学员</text><circle class="dot" cx="832" cy="96" r="2"/><text class="item" x="844" y="100">出勤管理</text>
+          <circle class="dot" cx="740" cy="128" r="2"/><text class="item" x="752" y="132">数据指标</text>
+        </g>
+        <g>
+          <rect class="system-card" x="936" y="40" width="200" height="120" rx="6"/><rect class="blue-rule" x="936" y="40" width="200" height="4" rx="2"/>
+          <text class="node-title" x="952" y="68">面授端</text><text class="type" x="1120" y="68">CLIENT</text>
+          <circle class="dot-blue" cx="956" cy="96" r="2"/><text class="item" x="968" y="100">课件加载</text><circle class="dot" cx="1048" cy="96" r="2"/><text class="item" x="1060" y="100">Cocos 互动</text>
+          <circle class="dot" cx="956" cy="128" r="2"/><text class="item" x="968" y="132">教学工具</text><circle class="dot" cx="1048" cy="128" r="2"/><text class="item" x="1060" y="132">笔锋体验</text>
+        </g>
+        <g>
+          <rect class="system-card" x="1152" y="40" width="240" height="120" rx="6"/><rect class="blue-rule" x="1152" y="40" width="240" height="4" rx="2"/>
+          <text class="node-title" x="1168" y="68">家长端</text><text class="type" x="1376" y="68">CLIENT</text>
+          <circle class="dot-blue" cx="1172" cy="96" r="2"/><text class="item" x="1184" y="100">通知 / 提醒</text><circle class="dot" cx="1284" cy="96" r="2"/><text class="item" x="1296" y="100">课表日历</text>
+          <circle class="dot" cx="1172" cy="128" r="2"/><text class="item" x="1184" y="132">购课</text><circle class="dot" cx="1284" cy="128" r="2"/><text class="item" x="1296" y="132">转退调</text>
+        </g>
+
+        <!-- L2: business domains -->
+        <rect class="row-alt" x="24" y="192" width="1392" height="216" rx="8"/>
+        <rect class="rail" x="24" y="192" width="168" height="216" rx="8"/>
+        <rect class="layer-rule" x="24" y="192" width="4" height="216"/>
+        <text class="layer-code" x="52" y="224">L2 · BUSINESS</text>
+        <text class="layer-name" x="52" y="256">线下业务</text>
+        <text class="layer-name" x="52" y="280">能力层</text>
+        <text class="layer-note" x="52" y="312">业务规则与领域服务</text>
+
+        <g>
+          <rect class="domain-card" x="216" y="208" width="200" height="184" rx="6"/>
+          <text class="node-title" x="232" y="240">例子管理</text><text class="type" x="400" y="240">DOMAIN</text>
+          <circle class="dot-blue" cx="236" cy="272" r="2"/><text class="item" x="248" y="276">例子挖掘</text>
+          <circle class="dot" cx="236" cy="304" r="2"/><text class="item" x="248" y="308">例子导入</text>
+          <circle class="dot" cx="236" cy="336" r="2"/><text class="item" x="248" y="340">转化归属</text>
+        </g>
+        <g>
+          <rect class="focal" x="432" y="208" width="272" height="184" rx="6"/><rect class="orange-rule" x="432" y="208" width="4" height="184" rx="2"/>
+          <text class="focal-title" x="452" y="240">教务基础</text><text class="type" x="688" y="240">CORE DOMAIN</text>
+          <circle class="dot-orange" cx="456" cy="272" r="2"/><text class="item" x="468" y="276">门店信息</text><circle class="dot" cx="576" cy="272" r="2"/><text class="item" x="588" y="276">人员管理</text>
+          <circle class="dot" cx="456" cy="304" r="2"/><text class="item" x="468" y="308">班级模型</text><circle class="dot" cx="576" cy="304" r="2"/><text class="item" x="588" y="308">分期管理</text>
+          <circle class="dot" cx="456" cy="336" r="2"/><text class="item" x="468" y="340">学员账户</text><circle class="dot" cx="576" cy="336" r="2"/><text class="item" x="588" y="340">教室管理</text>
+          <circle class="dot" cx="456" cy="368" r="2"/><text class="item" x="468" y="372">排课管理</text><circle class="dot" cx="576" cy="368" r="2"/><text class="item" x="588" y="372">调转退</text>
+        </g>
+        <g>
+          <rect class="domain-card" x="720" y="208" width="200" height="184" rx="6"/>
+          <text class="node-title" x="736" y="240">商品管理</text><text class="type" x="904" y="240">DOMAIN</text>
+          <circle class="dot-blue" cx="740" cy="272" r="2"/><text class="item" x="752" y="276">商品上架</text>
+          <circle class="dot" cx="740" cy="304" r="2"/><text class="item" x="752" y="308">下架管理</text>
+          <circle class="dot" cx="740" cy="336" r="2"/><text class="item" x="752" y="340">策略同步</text>
+          <circle class="dot" cx="740" cy="368" r="2"/><text class="item" x="752" y="372">库存管理</text>
+        </g>
+        <g>
+          <rect class="domain-card" x="936" y="208" width="200" height="184" rx="6"/>
+          <text class="node-title" x="952" y="240">履约基础</text><text class="type" x="1120" y="240">DOMAIN</text>
+          <circle class="dot-blue" cx="956" cy="272" r="2"/><text class="item" x="968" y="276">课表数据</text>
+          <circle class="dot" cx="956" cy="304" r="2"/><text class="item" x="968" y="308">出勤数据</text>
+          <circle class="dot" cx="956" cy="336" r="2"/><text class="item" x="968" y="340">履约异动</text>
+          <circle class="dot" cx="956" cy="368" r="2"/><text class="item" x="968" y="372">数据对账</text>
+        </g>
+        <g>
+          <rect class="domain-card" x="1152" y="208" width="240" height="48" rx="6"/><text class="node-title" x="1172" y="240">购课单</text><text class="type" x="1376" y="240">CAPABILITY</text>
+          <rect class="domain-card" x="1152" y="276" width="240" height="48" rx="6"/><text class="node-title" x="1172" y="308">沟通记录</text><text class="type" x="1376" y="308">CAPABILITY</text>
+          <rect class="domain-card" x="1152" y="344" width="240" height="48" rx="6"/><text class="node-title" x="1172" y="376">迎检</text><text class="type" x="1376" y="376">CAPABILITY</text>
+        </g>
+
+        <!-- L3: shared platform -->
+        <rect class="row" x="24" y="424" width="1392" height="216" rx="8"/>
+        <rect class="rail" x="24" y="424" width="168" height="216" rx="8"/>
+        <rect class="layer-rule" x="24" y="424" width="4" height="216"/>
+        <text class="layer-code" x="52" y="456">L3 · PLATFORM</text>
+        <text class="layer-name" x="52" y="488">直播课</text>
+        <text class="layer-name" x="52" y="512">能力层</text>
+        <text class="layer-note" x="52" y="544">共用教学与运营平台</text>
+
+        <g>
+          <rect class="platform-card" x="216" y="440" width="216" height="184" rx="6"/>
+          <text class="node-title" x="232" y="472">课堂（主讲 / 学生）</text><text class="type" x="416" y="496">PLATFORM</text>
+          <circle class="dot-blue" cx="236" cy="528" r="2"/><text class="item" x="248" y="532">直播</text><circle class="dot" cx="332" cy="528" r="2"/><text class="item" x="344" y="532">互动</text>
+          <circle class="dot" cx="236" cy="560" r="2"/><text class="item" x="248" y="564">测试</text><circle class="dot" cx="332" cy="560" r="2"/><text class="item" x="344" y="564">报告</text>
+          <circle class="dot" cx="236" cy="592" r="2"/><text class="item" x="248" y="596">录播 / AI</text><circle class="dot" cx="332" cy="592" r="2"/><text class="item" x="344" y="596">出镜</text>
+        </g>
+        <g>
+          <rect class="platform-card" x="448" y="440" width="200" height="184" rx="6"/>
+          <text class="node-title" x="464" y="472">教研</text><text class="type" x="632" y="472">PLATFORM</text>
+          <circle class="dot-blue" cx="468" cy="512" r="2"/><text class="item" x="480" y="516">课件</text><circle class="dot" cx="556" cy="512" r="2"/><text class="item" x="568" y="516">题</text>
+          <circle class="dot" cx="468" cy="544" r="2"/><text class="item" x="480" y="548">试卷</text><circle class="dot" cx="556" cy="544" r="2"/><text class="item" x="568" y="548">任务流</text>
+          <circle class="dot" cx="468" cy="576" r="2"/><text class="item" x="480" y="580">AI 课</text><circle class="dot" cx="556" cy="576" r="2"/><text class="item" x="568" y="580">讲义</text>
+        </g>
+        <g>
+          <rect class="focal" x="664" y="440" width="200" height="184" rx="6"/><rect class="orange-rule" x="664" y="440" width="4" height="184" rx="2"/>
+          <text class="focal-title" x="684" y="472">教务</text><text class="type" x="848" y="472">CORE PLATFORM</text>
+          <circle class="dot-orange" cx="688" cy="512" r="2"/><text class="item" x="700" y="516">CPU</text><circle class="dot" cx="772" cy="512" r="2"/><text class="item" x="784" y="516">大纲</text>
+          <circle class="dot" cx="688" cy="544" r="2"/><text class="item" x="700" y="548">班级</text><circle class="dot" cx="772" cy="544" r="2"/><text class="item" x="784" y="548">章节</text>
+          <circle class="dot" cx="688" cy="576" r="2"/><text class="item" x="700" y="580">学员</text><circle class="dot" cx="772" cy="576" r="2"/><text class="item" x="784" y="580">签备流</text>
+        </g>
+        <g>
+          <rect class="platform-card" x="880" y="440" width="240" height="184" rx="6"/>
+          <text class="node-title" x="896" y="472">服务运营</text><text class="type" x="1104" y="472">PLATFORM</text>
+          <circle class="dot-blue" cx="900" cy="512" r="2"/><text class="item" x="912" y="516">组织管理</text><circle class="dot" cx="1008" cy="512" r="2"/><text class="item" x="1020" y="516">排灌策略</text>
+          <circle class="dot" cx="900" cy="544" r="2"/><text class="item" x="912" y="548">服务 SOP</text><circle class="dot" cx="1008" cy="544" r="2"/><text class="item" x="1020" y="548">学员档案</text>
+          <circle class="dot" cx="900" cy="576" r="2"/><text class="item" x="912" y="580">管理看板</text><circle class="dot" cx="1008" cy="576" r="2"/><text class="item" x="1020" y="580">指标体系</text>
+        </g>
+        <g>
+          <rect class="platform-card" x="1136" y="440" width="256" height="184" rx="6"/>
+          <text class="node-title" x="1152" y="472">大数据体系</text><text class="type" x="1376" y="472">DATA PLATFORM</text>
+          <circle class="dot-blue" cx="1156" cy="512" r="2"/><text class="item" x="1168" y="516">实时数仓</text><circle class="dot" cx="1272" cy="512" r="2"/><text class="item" x="1284" y="516">小时分析</text>
+          <circle class="dot" cx="1156" cy="544" r="2"/><text class="item" x="1168" y="548">离线数仓</text><circle class="dot" cx="1272" cy="544" r="2"/><text class="item" x="1284" y="548">指标治理</text>
+          <circle class="dot" cx="1156" cy="576" r="2"/><text class="item" x="1168" y="580">多主题域</text><circle class="dot" cx="1272" cy="576" r="2"/><text class="item" x="1284" y="580">质量体系</text>
+        </g>
+
+        <!-- L4: group foundation -->
+        <rect class="row-alt" x="24" y="656" width="1392" height="152" rx="8"/>
+        <rect class="rail" x="24" y="656" width="168" height="152" rx="8"/>
+        <rect class="layer-rule" x="24" y="656" width="4" height="152"/>
+        <text class="layer-code" x="52" y="688">L4 · FOUNDATION</text>
+        <text class="layer-name" x="52" y="720">集团</text>
+        <text class="layer-name" x="52" y="744">能力层</text>
+        <text class="layer-note" x="52" y="776">企业级共享基础设施</text>
+
+        <g>
+          <rect class="foundation-card" x="216" y="672" width="200" height="120" rx="6"/>
+          <text class="node-title" x="232" y="704">信息化</text><text class="type" x="400" y="704">FOUNDATION</text>
+          <circle class="dot-blue" cx="236" cy="736" r="2"/><text class="item" x="248" y="740">账号</text>
+          <circle class="dot" cx="236" cy="768" r="2"/><text class="item" x="248" y="772">外呼通道</text>
+        </g>
+        <g>
+          <rect class="foundation-card" x="432" y="672" width="272" height="120" rx="6"/>
+          <text class="node-title" x="448" y="704">售卖中台</text><text class="type" x="688" y="704">FOUNDATION</text>
+          <circle class="dot-blue" cx="452" cy="736" r="2"/><text class="item" x="464" y="740">商品</text><circle class="dot" cx="564" cy="736" r="2"/><text class="item" x="576" y="740">交易</text>
+          <circle class="dot" cx="452" cy="768" r="2"/><text class="item" x="464" y="772">支付</text><circle class="dot" cx="564" cy="768" r="2"/><text class="item" x="576" y="772">营销</text>
+        </g>
+        <g>
+          <rect class="foundation-card" x="720" y="672" width="200" height="120" rx="6"/>
+          <text class="node-title" x="736" y="704">拉新</text><text class="type" x="904" y="704">FOUNDATION</text>
+          <circle class="dot-blue" cx="740" cy="736" r="2"/><text class="item" x="752" y="740">鲲鹏</text>
+          <circle class="dot" cx="740" cy="768" r="2"/><text class="item" x="752" y="772">葫芦娃</text>
+        </g>
+        <g>
+          <rect class="foundation-card" x="936" y="672" width="272" height="120" rx="6"/>
+          <text class="node-title" x="952" y="704">大数据</text><text class="type" x="1192" y="704">FOUNDATION</text>
+          <circle class="dot-blue" cx="956" cy="736" r="2"/><text class="item" x="968" y="740">离线计算框架</text>
+          <circle class="dot" cx="956" cy="768" r="2"/><text class="item" x="968" y="772">实时计算框架</text>
+        </g>
+        <g>
+          <rect class="foundation-card" x="1224" y="672" width="168" height="120" rx="6"/>
+          <text class="node-title" x="1240" y="704">题库</text><text class="type" x="1376" y="704">FOUNDATION</text>
+        </g>
+
+        <line x1="24" y1="832" x2="1416" y2="832" stroke="#d9dee7" stroke-width="1"/>
+        <text x="24" y="856" fill="#8791a2" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".12em">READ TOP TO BOTTOM · APPLICATION → BUSINESS DOMAIN → SHARED PLATFORM → GROUP FOUNDATION</text>
+      </svg>
+    </div>
+    <footer>CAPABILITY MAP · FAITHFUL TO SOURCE · 2026</footer>
+  </main>
+</body>
+</html>

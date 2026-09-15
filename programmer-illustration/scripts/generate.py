@@ -37,7 +37,7 @@ CONFIG_PATH = SKILL_DIR / "config.json"
 # model：默认填的是本环境验证可用的版本，换别的网关/官方时按其支持的模型名改即可。
 DEFAULT_PROVIDERS = {
     "openai": {"base_url": "", "model": "gpt-image-2"},
-    "gemini": {"base_url": "", "model": "gemini-3.1-flash-image-preview"},
+    "gemini": {"base_url": "", "model": "gemini-3-pro-image"},
     "doubao": {"base_url": "https://ark.cn-beijing.volces.com/api/v3/images/generations",
                "model": "doubao-seedream-5-0-260128"},
     "qwen": {"base_url": "", "model": "qwen-image-2.0"},
@@ -79,10 +79,10 @@ def require(cfg: dict, provider: str, *keys: str) -> tuple:
 
 
 # ---------------------------------------------------------------------------
-# 通道：gemini（gemini-3.1-flash-image-preview，OpenAI 兼容 chat/completions 网关）
+# 通道：gemini（gemini-3-pro-image，OpenAI 兼容 chat/completions 网关）
 # 排版/多元素一致性强，中文渲染也不错。
 # 走 OpenAI 兼容网关（你的代理服务 / OpenRouter 等）的 chat 接口：
-# messages + modalities=["text","image"]，图片以裸 base64 放在
+# 请求体使用标准 messages 结构。图片以裸 base64 放在
 # choices[0].message.content 里 type=image_url 的项。
 # 注意：这不是 Google 官方原生 API（官方是 generativelanguage 的
 # :generateContent + contents/parts 结构）；要直连 Google 官方需改写本函数。
@@ -97,7 +97,6 @@ def generate_gemini(cfg: dict, prompt: str, ratio: str) -> bytes:
     body = {
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
-        "modalities": ["text", "image"],
     }
     r = requests.post(url, headers={"Authorization": f"Bearer {key}",
                                     "Content-Type": "application/json"},
